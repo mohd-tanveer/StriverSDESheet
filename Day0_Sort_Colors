@@ -23,3 +23,37 @@ class Solution {
 
     }
 }
+
+
+//better Algorithm by TUF , dutch national flag algorithm,
+class Solution {
+    public void sortColors(int[] nums) {
+        int low=0,mid=0;
+        int high=nums.length-1;
+        int temp;
+        // all the elements from o to low-1 are o, high to n-1 2's and low to high 1's
+        while(mid<=high){
+            
+            if(nums[mid]==0){
+                    temp = nums[low];
+                    nums[low]=nums[mid];
+                    nums[mid]=temp;
+                    low++;
+                    mid++;
+                
+            }else if(nums[mid]==1){
+                    mid++;
+                
+            }else{
+                    temp = nums[mid];
+                    nums[mid]=nums[high];
+                    nums[high]=temp;
+                    high--;
+                    
+            }
+        }
+        System.out.println(Arrays.toString(nums));
+
+    }
+    
+}
