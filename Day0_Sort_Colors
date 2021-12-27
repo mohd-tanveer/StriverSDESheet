@@ -1,0 +1,25 @@
+class Solution {
+    public void sortColors(int[] nums) {
+        int numberOfZeroes=0,numberOfOnes=0,numberOfTwos=0;
+        for(int value:nums){
+            if(value == 0){
+                numberOfZeroes++;
+            }else if(value == 1){
+                numberOfOnes++;
+            }else{
+                numberOfTwos++;
+            }
+        }
+        for(int i=0;i<numberOfZeroes;i++){
+            nums[i]=0;
+        }
+        for(int i=numberOfZeroes;i<numberOfZeroes+numberOfOnes;i++){
+            nums[i]=1;
+        }
+        for(int i=numberOfZeroes+numberOfOnes;i<numberOfZeroes+numberOfOnes+numberOfTwos;i++){
+            nums[i]=2;
+        }
+        System.out.println(Arrays.toString(nums));
+
+    }
+}
