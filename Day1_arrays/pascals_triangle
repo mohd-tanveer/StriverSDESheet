@@ -1,0 +1,23 @@
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> currentRow, prevRow = null;
+        for(int i=0; i<numRows; ++i){
+            //we know first and last coulumn of each row is 1
+            currentRow = new ArrayList<Integer>();
+            for(int j=0;j<=i;j++){
+                if(j == 0 || j==i){
+                    //when it is first column or last column 
+                    currentRow.add(1); 
+                }else{
+                    currentRow.add(prevRow.get(j-1)+prevRow.get(j));
+                }
+            }
+            prevRow = currentRow;
+            result.add(currentRow);
+        }
+        return result;
+    }
+}
+
+//to find direct value we can use P&C 
