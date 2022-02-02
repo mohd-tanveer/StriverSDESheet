@@ -1,0 +1,17 @@
+class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> toBeRetrun = new ArrayList<Integer>();
+        long result = 1L;
+        for(int i=0;i<=rowIndex;i++){
+          if(i==0 || i == rowIndex){
+              toBeRetrun.add((int)1L);
+          }else{
+              result*=(rowIndex-i+1);
+              result/=i;
+              toBeRetrun.add((int)result);
+          }
+            
+        }
+        return  toBeRetrun;
+    }
+}
