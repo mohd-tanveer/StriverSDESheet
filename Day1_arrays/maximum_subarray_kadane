@@ -1,0 +1,20 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        
+        //solution 1 to use 3 loop, 
+        /* for i -> n-1
+            for j=i to n-1
+            for k=i to j  replace the sum with max sum
+            it will find all the sub array , second approach instead of using 3rd loop sum nad check for the max value in the second loop itself which will boils down to o(n^2)*/
+        int maxSum = nums[0];//because atleast one element said other wise Intger.MIN_VALUE
+        int sum =0;//to check current sum 
+        for(int i=0 ;i< nums.length; i++){
+            sum +=nums[i];
+            if(maxSum<sum)
+                maxSum = sum;
+            if(sum<0)
+                sum=0;//because carrying the negative or less is of no use  
+        }
+        return maxSum;
+    }
+}
