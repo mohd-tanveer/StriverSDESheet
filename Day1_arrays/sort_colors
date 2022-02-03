@@ -1,0 +1,59 @@
+class Solution {
+    public void sortColors(int[] nums) {
+        int numberOfZeroes=0,numberOfOnes=0,numberOfTwos=0;
+        for(int value:nums){
+            if(value == 0){
+                numberOfZeroes++;
+            }else if(value == 1){
+                numberOfOnes++;
+            }else{
+                numberOfTwos++;
+            }
+        }
+        for(int i=0;i<numberOfZeroes;i++){
+            nums[i]=0;
+        }
+        for(int i=numberOfZeroes;i<numberOfZeroes+numberOfOnes;i++){
+            nums[i]=1;
+        }
+        for(int i=numberOfZeroes+numberOfOnes;i<numberOfZeroes+numberOfOnes+numberOfTwos;i++){
+            nums[i]=2;
+        }
+        System.out.println(Arrays.toString(nums));
+
+    }
+}
+
+
+//better Algorithm by TUF , dutch national flag algorithm,
+class Solution {
+    public void sortColors(int[] nums) {
+        int low=0,mid=0;
+        int high=nums.length-1;
+        int temp;
+        // all the elements from o to low-1 are o, high to n-1 2's and low to high 1's
+        while(mid<=high){
+            
+            if(nums[mid]==0){
+                    temp = nums[low];
+                    nums[low]=nums[mid];
+                    nums[mid]=temp;
+                    low++;
+                    mid++;
+                
+            }else if(nums[mid]==1){
+                    mid++;
+                
+            }else{
+                    temp = nums[mid];
+                    nums[mid]=nums[high];
+                    nums[high]=temp;
+                    high--;
+                    
+            }
+        }
+        System.out.println(Arrays.toString(nums));
+
+    }
+    
+}
