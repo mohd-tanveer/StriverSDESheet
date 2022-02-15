@@ -1,0 +1,17 @@
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int repeated =0;
+        for(int i=0;i<nums.length;i++){
+            int abs = Math.abs(nums[i]);
+            if(nums[abs-1]>0){
+                //if the value is positive make it negative to check if it appears or not
+                nums[abs-1] = -nums[abs-1];
+            }else{
+                repeated = abs;
+            }
+        }
+        return repeated;
+    }
+}
+
+//we can also use counter approach or extra space to solve the problem 
