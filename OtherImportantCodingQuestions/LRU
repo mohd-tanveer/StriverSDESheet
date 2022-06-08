@@ -1,0 +1,60 @@
+import javax.print.CancelablePrintJob;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+public class main {
+    public static void main(String[] args) {
+        //Least recently used algorithm(LRU)
+        /*
+        1,2,3,4,1,3  cache window size = 3
+        count number of page faults
+        we can solve the problem using array but it requires shifting and searching ,
+        we can use linked list for shifting and hashmap for searching
+         */
+        LRUCache cache = new LRUCache(4);
+        cache.refer(1);
+        cache.refer(2);
+        cache.refer(3);
+        cache.refer(1);
+        cache.refer(4);
+        cache.refer(5);
+        cache.display();
+        System.out.println("\npage fault  "+ LRUCache.pageFault);
+
+    }
+}
+class LRUCache{
+    //to store the cache size
+    Deque<Integer> doublyQueue;
+    //to store the values
+    private HashSet<Integer> hashSet;
+    private final int CACHE_SIZE;
+    public  static int  pageFault=0;
+    public LRUCache(int capacity) {
+        doublyQueue = new LinkedList<>();
+        hashSet = new HashSet<>(capacity);
+        CACHE_SIZE = capacity;
+    }
+    public void refer(int page){
+        if(!hashSet.contains(page)){
+            if(doublyQueue.size() == CACHE_SIZE){
+               hashSet.remove(doublyQueue.removeLast());
+            }
+            pageFault++;
+        }else {
+            //found page should be move to latest
+            doublyQueue.remove(page);
+        }
+        doublyQueue.push(page);
+        hashSet.add(page);//this will
+    }
+
+    public void display() {
+        Iterator<Integer> itr = doublyQueue.iterator();
+        while (itr.hasNext()) {
+            System.out.print(itr.next() + " ");
+        }
+    }
+}
