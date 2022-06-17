@@ -1,1 +1,33 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        //in o(n^2) we can search for the target
+        int row = matrix.length;
+        int col = matrix[0].length;
+        //find in which rows the value is presnet 
+        int atRow= -1; 
+        System.out.println("row"+row);
+        System.out.println("col"+col);
 
+        
+        boolean valueIsPresent=false;
+        for(int i =0;i<row;i++ ){
+            if(matrix[i][col-1]>=target){
+                atRow =i;
+                System.out.println("atRow"+atRow);
+                break;
+            }
+        }
+                //System.out.println("atrow"+atRow);
+        if(atRow==-1){
+            return false;
+        }
+        
+        for(int j=0;j<col;j++){
+            if(target==matrix[atRow][j]){
+                valueIsPresent =true;
+            }
+        }
+        return valueIsPresent;
+        
+    }
+}
