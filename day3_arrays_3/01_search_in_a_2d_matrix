@@ -31,3 +31,38 @@ class Solution {
         
     }
 }
+
+
+
+
+
+//striver solution 
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        
+        //approach 2 is to store the data into array using and use binary search but that would take extra space complexity, or we can use imaginary indexy 
+        int row = matrix.length;
+        if(row==0)
+            return false;
+        int col = matrix[0].length;
+        
+        int low = 0;
+        int high = row*col-1;
+        
+        while(low<=high){
+            int mid = low+(high-low)/2;
+            if(matrix[mid/col][mid%col]==target){
+                return true;
+            }
+            if(matrix[mid/col][mid%col]<target){
+                //search right
+                low = mid+1;
+            }
+            else{  //(matrix[mid/col][mid%col]>target)
+                high = mid-1;;
+            }
+        }
+        return false;
+        
+    }
+}
