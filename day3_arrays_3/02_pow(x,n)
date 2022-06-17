@@ -18,3 +18,34 @@ class Solution {
     }
 }
 //time limit exceeded 
+
+class Solution {
+    public double myPow(double x, int n) {
+        //if n is negative 
+        double ans =1.0;
+        boolean isNNegative=false;
+        long nn=n;
+        if(nn<0){
+            isNNegative=true;
+            nn*=(-1);
+        }
+        System.out.println(nn);
+        //since 2^10 => (2*2)^5 => 4*(4^4)=> (16)^2 => 256
+        //so every time when n is even we are reducing the power by 2 and every time number is odd we are reducing the number by 1
+        
+        while(nn>0){
+            if(nn%2==0){
+                x*=x;
+                nn/=2;
+            }else{
+                ans*=x;
+                nn-=1;
+            }
+        }
+        if(isNNegative){
+            System.out.println(ans);
+            ans=1.0/ans;
+        }
+        return ans;
+    }
+}
