@@ -17,3 +17,7 @@ class Solution {
         return result;
     }
 }
+
+
+//another approach would be to sort the array and take two pointers  and check if arr[i]+arr[j]==target , if greater than target decrement j if less than target increament i
+//and after that run the first array to find out the indices 
