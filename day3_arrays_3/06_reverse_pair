@@ -1,3 +1,6 @@
+//solution and question 
+//   https://leetcode.com/problems/reverse-pairs/submissions/
+
 class Solution {
     public int reversePairs(int[] nums) {
         return mergeSort(nums,0,nums.length-1);
