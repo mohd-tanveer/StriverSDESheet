@@ -1,0 +1,87 @@
+class Solution {
+    public int reversePairs(int[] nums) {
+        return mergeSort(nums,0,nums.length-1);
+        
+    }
+    static int mergeSort(int[] nums, int low, int high ){
+        if(low>=high) return 0;
+        int mid = low+(high-low)/2;
+        //leftsubtree
+        int inversionCount = mergeSort(nums,low,mid);
+        inversionCount += mergeSort(nums,mid+1,high);
+        inversionCount += merge(nums,low,mid,high);
+        return inversionCount;
+    }
+    static int merge(int[] nums, int low , int mid ,int high){
+        //count of pairs
+        int cnt = 0;
+        int p=low;
+        int q=mid+1;
+        while(p <= mid && q <=high){
+            //1,2,3,4
+            //1,2
+            if(nums[p]>2*(long)nums[q]) {
+                cnt = cnt+mid-p+1;
+                q++;
+            }else{
+                p++;
+            }
+        }
+        List<Integer> temp = new ArrayList<>();
+        int left  = low;
+        int right = mid+1;
+        while(left<= mid && right<= high ){
+            if(nums[left]<=nums[right]){
+                temp.add(nums[left++]);
+            }else{
+                temp.add(nums[right++]);
+            }
+            
+        }
+        while(left<=mid){
+            temp.add(nums[left++]);
+        }
+        while(right<=high){
+            temp.add(nums[right++]);
+        }
+        
+        for(int x=low ;x<=high;x++){
+            nums[x] = temp.get(x-low);
+        }
+        return cnt;
+
+    }
+}
+
+
+//more effiecent solution
+class Solution {
+    public int reversePairs(int[] nums) {
+        return mergeSort(nums,0,nums.length-1);
+        
+    }
+    static int mergeSort(int[] nums, int low, int high ){
+        if(low>=high) return 0;
+        int mid = low+(high-low)/2;
+        //leftsubtree
+        int inversionCount = mergeSort(nums,low,mid);
+        inversionCount += mergeSort(nums,mid+1,high);
+        inversionCount += merge(nums,low,mid,high);
+        return inversionCount;
+    }
+    static int merge(int[] nums, int low , int mid ,int high){
+        //count of pairs
+        int cnt = 0;
+        int p = low;
+        int q= mid+1;
+        while(p<=mid && q<=high){
+            if((long)nums[p]>2*(long)nums[q]){
+                cnt+=mid-p+1;
+                q++;
+            }else{p++;}
+        }
+        Arrays.sort(nums,low,high+1);
+        return cnt;
+
+    }
+}
