@@ -55,3 +55,7 @@ class Solution {
         return c;
     }
 }
+
+
+
+//https://www.interviewbit.com/problems/subarray-with-given-xor/
