@@ -1,0 +1,58 @@
+/*
+1) Array prefix 
+example = a[]= {4,2,2,1,5}  store the cumulative sum in another array , cumulative[] = {4,6,8,9,5}
+now to find the sum between two index we just need to subtract like this                  l    r
+let's consider l and r indexes pointing to 6 and 9 now we want a sum between these two index we could simply subtract valueof(r)-valueOf(l-1)  => 9-4=>5 as good as (2,2,1)
+
+
+
+
+
+*/
+
+
+import com.sun.tools.javac.Main;
+
+import javax.print.CancelablePrintJob;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.stream.IntStream;
+
+public class main {
+    public static void main(String[] args) {
+        Solution obj = new Solution();
+        int[] A = new int[]{4,2,2,6,4};
+        int countTotal=obj.solve(A,6);
+        System.out.println("The total number of subarrays having a given XOR k is "+countTotal);
+    }
+}
+
+class Solution {
+    public int solve(int[] A, int B) {
+        HashMap<Integer,Integer> visited = new HashMap<Integer,Integer>();
+        int c = 0;
+
+
+        int n = A.length;
+        int[] prefix = new int[n];//store cumulative xor's
+        prefix[0] = A[0];//first value will be same
+        for(int i =1; i<n ;i++){
+            prefix[i]= prefix[i-1]^A[i];//this is cumulating
+        }
+        for(int i = 0;i<n;i++) {
+            int xor = B ^ A[i];
+            if(visited.get(xor) != null)
+                c += visited.get(xor);
+            if(xor == B) {
+                c++;
+            }
+            if(visited.get(xor) != null)
+                visited.put(xor, visited.get(xor) + 1);
+            else
+                visited.put(xor, 1);
+            //avobe if else can be written as
+            visited.merge(xor,1,Integer::sum);
+        }
+        return c;
+    }
+}
