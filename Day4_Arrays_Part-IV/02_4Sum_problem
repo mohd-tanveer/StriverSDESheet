@@ -1,0 +1,35 @@
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Set<List<Integer>>  result = new HashSet<>();
+        List<List<Integer>> resultTobeReturn = new ArrayList<>();
+        Arrays.sort(nums);
+        int n = nums.length;
+        for(int i=0;i<n-3;i++){
+            if(i>0 && nums[i]==nums[i-1]){continue;}
+            for(int j=i+1;j<n-2;j++){
+                if(j>i+1 && nums[j]==nums[j-1]){continue;}
+                int leftIndex=j+1;
+                int rightIndex=n-1;
+                while(leftIndex<rightIndex){
+                    //System.out.println(leftIndex+"  "+rightIndex);
+
+                   long sum = (long)nums[i]+(long)nums[j]+(long)nums[leftIndex]+(long)nums[rightIndex];
+                    if((long)sum>(long)target){
+                        rightIndex--;
+                    }else if((long)sum==(long)target){
+                    List<Integer> list = Arrays.asList(nums[i],nums[j],nums[leftIndex],nums[rightIndex]);
+                        list.stream().forEach(System.out::print);
+                        result.add(list);
+                        leftIndex++;
+                    }else{
+                        leftIndex++;
+                    }
+                }
+            }
+        }
+        for(List<Integer> list : result){
+            resultTobeReturn.add(list);
+        }
+        return resultTobeReturn;
+    }
+}
