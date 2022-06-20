@@ -43,14 +43,14 @@ class Solution {
            int xor = B ^ prefix[i];
             if(visited.get(xor) != null)
                 c += visited.get(xor);
-            if(prefix[i] == B) {
+            if(prefix[i] == B) {//mistake one
                 c++;
             }
-            if(visited.get(cpx) != null) 
-                visited.put(cpx, visited.get(cpx) + 1); 
-            else 
-                visited.put(cpx, 1); 
-            //visited.merge(xor, 1, Integer::sum);
+            if(visited.get(prefix[i]) != null)
+                visited.put(prefix[i], visited.get(prefix[i]) + 1);
+            else
+                visited.put(prefix[i], 1);
+            //visited.merge(prefix[i], 1, Integer::sum);
         }
         return c;
     }
