@@ -40,7 +40,7 @@ class Solution {
             prefix[i]= prefix[i-1]^A[i];//this is cumulating
         }
         for(int i = 0;i<n;i++) {
-            int xor = B ^ A[i];
+            int xor = B ^ prefix[i];
             if(visited.get(xor) != null)
                 c += visited.get(xor);
             if(xor == B) {
