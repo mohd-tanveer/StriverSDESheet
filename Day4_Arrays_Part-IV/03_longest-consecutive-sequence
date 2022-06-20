@@ -1,0 +1,29 @@
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        //simple solution would be sort and iterate over it .
+        
+        //better approach is to use hashtable to store and iterate over it.
+        //and start from the minimal element 
+        //5 4 3 2 1 
+        Set<Integer> set = new HashSet<>();
+        int lcsCount=0;
+        for(int i:nums){
+            set.add(i);
+        }
+        for(int i:nums){
+            //check if the number before this number exit in hashtable or not , if yes try to find minimum number 
+            
+            if(!set.contains(i-1)){
+                int currentStreak =1;
+                int num = i;
+                while(set.contains(num+1)){
+                    currentStreak++;
+                    num=num+1;
+                }
+                lcsCount = lcsCount>currentStreak?lcsCount:currentStreak;
+            }
+        }
+            
+           return lcsCount; 
+        }  
+}
