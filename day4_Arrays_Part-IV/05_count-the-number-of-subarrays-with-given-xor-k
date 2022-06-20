@@ -10,7 +10,6 @@ let's consider l and r indexes pointing to 6 and 9 now we want a sum between the
 
 */
 
-
 import com.sun.tools.javac.Main;
 
 import javax.print.CancelablePrintJob;
@@ -24,6 +23,8 @@ public class main {
         int[] A = new int[]{4,2,2,6,4};
         int countTotal=obj.solve(A,6);
         System.out.println("The total number of subarrays having a given XOR k is "+countTotal);
+
+
     }
 }
 
@@ -32,26 +33,24 @@ class Solution {
         HashMap<Integer,Integer> visited = new HashMap<Integer,Integer>();
         int c = 0;
 
-
         int n = A.length;
-        int[] prefix = new int[n];//store cumulative xor's
-        prefix[0] = A[0];//first value will be same
-        for(int i =1; i<n ;i++){
-            prefix[i]= prefix[i-1]^A[i];//this is cumulating
+        int[] prefix = new int[n];
+        prefix[0]=A[0];
+        for(int i=1;i<n;i++){
+            prefix[i]=prefix[i-1]^A[i];
         }
         for(int i = 0;i<n;i++) {
-            int xor = B ^ prefix[i];
+           int xor = B ^ prefix[i];
             if(visited.get(xor) != null)
                 c += visited.get(xor);
-            if(xor == B) {
+            if(prefix[i] == B) {
                 c++;
             }
-            if(visited.get(xor) != null)
-                visited.put(xor, visited.get(xor) + 1);
-            else
-                visited.put(xor, 1);
-            //avobe if else can be written as
-            visited.merge(xor,1,Integer::sum);
+            if(visited.get(cpx) != null) 
+                visited.put(cpx, visited.get(cpx) + 1); 
+            else 
+                visited.put(cpx, 1); 
+            //visited.merge(xor, 1, Integer::sum);
         }
         return c;
     }
