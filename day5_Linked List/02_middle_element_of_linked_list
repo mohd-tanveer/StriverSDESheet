@@ -1,0 +1,33 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode fastPointer =head;
+        ListNode slowPointer = head;
+        if(head==null){
+            return head;
+        }
+        while(fastPointer !=null && fastPointer.next !=null ){
+            slowPointer=slowPointer.next;
+            fastPointer=fastPointer.next.next;
+        }
+        return slowPointer;
+    }
+}
+
+//at line number 18 if we try to use only one condition we will get error .
+/*    fastPointer !=null
+java.lang.NullPointerException: Cannot read field "next" because "<local2>.next" is null
+  at line 20, Solution.middleNode
+  at line 54, __DriverSolution__.__helper__
+  at line 84, __Driver__.main
+  
+  */
