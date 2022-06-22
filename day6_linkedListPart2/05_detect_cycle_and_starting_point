@@ -1,1 +1,50 @@
 https://leetcode.com/problems/linked-list-cycle-ii/
+
+//first approach is to use hashtable to store the address of each node and once node is repeated we can say this is the required solution
+static Node detectCycle(Node head) {
+    HashSet<Node> st=new HashSet<>();
+    while(head != null) {
+        if(st.contains(head)) return head;
+        st.add(head);
+        head = head.next;
+    }
+    return null;
+
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head==null || head.next==null){
+            return null;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode currentNode=head;
+        while(fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            
+            if(slow==fast){
+                //loop is detected 
+                //now since we have meeting point it means head should traverse as much slow or fast pointer need to traverse to reach the meeting point
+                while(currentNode != slow){
+                    currentNode=currentNode.next;
+                    slow=slow.next;
+                }
+                return currentNode;
+            }
+            
+        }
+        return null;
+    }
+}
