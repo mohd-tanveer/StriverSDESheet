@@ -70,3 +70,9 @@ class Solution {
         return head;
     }
 }
+
+
+//we can also reverse the linkedList using add first method  
+https://www.youtube.com/watch?v=TOztSNeXZuw&ab_channel=Pepcoding 
+
+
