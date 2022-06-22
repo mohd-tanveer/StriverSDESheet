@@ -22,6 +22,20 @@ static Node detectCycle(Node head) {
  *     }
  * }
  */
+ 
+ /* Intution behind why this algorithm works
+ slow = D + k
+ fast = D + k +nC(some extra cycle c= length of cycle), we know that fast moves twice as slow
+ 2slow = fast
+ 2(d+k) = d+k+nc
+ d+k=nc
+ d=nc-k
+ which means an another pointer will take d distance to reach starting point of loop and other pointer need to travel nc-k which is equivalent to d obiously with some cylce and short fall by k , hence starting from meeting point 
+ would good so that they can meet at start pointn.
+ 
+ */
+ 
+ 
 public class Solution {
     public ListNode detectCycle(ListNode head) {
         if(head==null || head.next==null){
