@@ -1,0 +1,79 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        
+        //taking temporary head and tempoary tail and original head and orignal tail
+        ListNode current = head,curr=head, oh=null,ot=null;
+        //find the length of linkedlist
+        if(head==null || head.next == null || k==0){//in case there is no reverse 
+            return head;
+        }
+        int length=0;
+        //find the length
+        while(curr!=null){
+            length++;
+            curr=curr.next;
+        }
+        //solve untill true
+        while(length>=k){
+            int temp = k;
+            //perfom chunk wise 
+            while(temp-->0){
+                //for all the k values perform below
+                ListNode forward  = current.next;
+                current.next = null;// break the first  link
+                addFirst(current);
+                current=forward;
+            }//after first loop first k group is reverse
+            if(oh==null){
+                oh=th;
+                ot=tt;
+            }//this is first case 
+            else{
+                //when we already have our oh and ot set th in ot and 
+                ot.next=th;
+                ot=tt;
+            }
+            //ath the end of every chunk assign th and tt to null
+            th=null;
+            tt=null;
+            length-=k;
+            
+        }
+        //in case there are no k chunks but we still have some element left
+        ot.next=current;
+        return oh;
+    }
+    
+    static ListNode th = null;//temporary head 
+    static ListNode tt = null;//temoray tail
+        static void addFirst(ListNode node){
+            if(th==null){
+                th=node;
+                tt=node;
+            }else{
+                node.next=th;//else insert it at first position
+                th=node;
+            }
+        }
+
+}
+
+
+//refrer pepcoding for revision https://www.youtube.com/watch?v=EKgNMFCShO8&ab_channel=Pepcoding
+
+
+
+
+
+//TUF solution
+https://leetcode.com/submissions/detail/728442682/
