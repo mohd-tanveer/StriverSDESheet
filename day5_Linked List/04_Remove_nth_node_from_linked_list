@@ -1,0 +1,35 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        //in one passs let's say we have total m nodes and we want to delete nth node from end 
+        //that means we want to delete (m-n)th node from start, so having fast pointer and slow pointer at start and move fast pointer n position ahead , now we have to travel only m-n node from start and fast to end to reach the destination.
+        
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        
+        for(int i = 1; i <= n; i++){
+            fast = fast.next;
+        }
+        
+        //if this is head element that we are removing or nth node need to be removed cause fast reach to the null and hence there is no point of doing traversal 
+        if(fast==null){
+            return head.next;
+        }
+        while(fast.next != null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        slow.next = slow.next.next;
+        return head;
+    }
+}
