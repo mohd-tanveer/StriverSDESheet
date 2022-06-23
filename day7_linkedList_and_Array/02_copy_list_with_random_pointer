@@ -1,0 +1,61 @@
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        //approach one is to use a hashmap and store <node,node> for each node store deep copy of it's node and then again traverse and main  linked, now  linked see the pointer from original linked list and implement in copied node of hashmap  . o(n) tc, sc =o(n) for hashmap
+        
+        // appraoch 2 : create deep copy and point each node to it's deep copy node so that we can make the reference correctly in the next step. node 1 will point to deep copy of 1 and deepcopy of 1 of next will copy the address of node2 , step3 construct original list
+        
+        //step1 to create a copy usingw tow pointer 
+        Node iter = head;
+        Node front = head;
+        while(iter!=null){
+            front = iter.next;
+            Node copy = new Node(iter.val);
+            iter.next = copy;//here we have broken the link to og linkedlist 
+            copy.next = front;
+            iter=front; //move iter to fron 
+        }//till this point we have constrcuted deep copy linked list 
+        
+        //step2 
+        //copy the random pointer in deep copy
+        iter = head;
+        while(iter!=null){
+            // in random of deepcopy , copy the random of its og node
+            if(iter.random!=null){//becasue node can point to null as well
+            //iter.next.random = iter.random;//this is point ot original rather point to (mistake)
+            iter.next.random = iter.random.next;
+            System.out.println("it should work for "+iter.val);
+            //move iter to next poistion
+            }
+            iter = iter.next.next; //becasue deepcopy contains the address of next og node
+
+            
+        }
+        //step3 to construct he deep copy correctly 
+        iter = head;
+        Node psh = new Node(0);//create psudo head to point to deecp copy linked list
+        Node copy = psh;
+        while(iter!=null){
+            front=iter.next.next;
+            copy.next=iter.next;//point to head of copy now we can break the link
+            iter.next=front;
+            iter=iter.next;
+            copy = copy.next;
+        }
+        return psh.next;
+    }
+}
