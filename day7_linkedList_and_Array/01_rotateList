@@ -1,0 +1,57 @@
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        //first is to use add first method 
+        ListNode curr = head;
+        ListNode pre = curr;
+        ListNode th=null,tt=null;
+        ListNode oh=head,ot=head;
+        int len=0;
+           if(head==null ||head.next ==null || k==0){
+                return head;
+            }
+        while(curr!=null){
+            pre=curr;
+            curr=curr.next;
+            len +=1;
+        }
+        
+        tt=pre;
+        th=head;
+        System.out.println(len);
+        
+        if(k>=len){
+            k = k%len;
+        }
+        if(k==0){
+                return head;
+            }
+        
+        for(int i=1;i<=len-k;i++){
+            ot=th;
+            th=th.next;
+            System.out.println("is it coming");
+        }
+        //now our th at kth position and our tt at last position 
+        //let's use add first method to solve
+        ot.next=null;
+        tt.next=oh;//this line produces error in case of len=k since tt is already mvoed and we are chaning the reference hence don't use if k==len
+        oh=th;
+        
+        return oh;
+    }
+}
+
+//solved using above first method now let's solve using circular linked list;
+
+
