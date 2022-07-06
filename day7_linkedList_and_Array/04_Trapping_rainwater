@@ -1,0 +1,32 @@
+class Solution {
+    public int trap(int[] height) {
+        //at any index  min(maxlengthLeft,maxlengthRight) - a[i]
+        //to find max of left and max of right from any index we can use prefixmax and suffix max array.
+        //to avoid using extra array we can use two pointer approach 
+        //the intution is to make sure there is building exist at right side or left side to store the water 
+        
+        int leftMax=0;
+        int rightMax=0;
+        int low=0,high=height.length-1;
+        int res=0;
+        while(low<=high){
+            if(height[low]<=height[high]){//this makes sure that atleast hight of x is there at right side to support the water harvesting 
+                if(height[low]>=leftMax){
+                    leftMax=height[low];  
+                }else{
+                    res = res+leftMax-height[low];
+                }
+                low++;
+            }else{
+                if(height[high]>=rightMax){//similary this makes sure that there is hight more than that 
+                    rightMax=height[high];
+                }else{
+                    res=res+rightMax-height[high];
+                }
+                high--;
+            }
+        }
+        return res;
+        
+    }
+}
