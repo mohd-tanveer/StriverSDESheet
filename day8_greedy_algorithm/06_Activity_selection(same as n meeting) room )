@@ -1,0 +1,32 @@
+//the only difference is the coincidence of time is allowed 
+
+import java.util.*;
+public class Solution {
+    public static int maximumActivities(List<Integer> start, List<Integer> end) {
+        Meeting arr[] = new Meeting[start.size()];
+        for(int i =0 ; i<start.size(); i++){
+            arr[i] = new Meeting(start.get(i),end.get(i));
+            }
+        Arrays.sort(arr,(a,b)->a.end-b.end);
+        
+        int lastEnding = arr[0].end; //check the start of an array with ending
+        int count =1;
+        for(int i =1; i<start.size() ;i++){
+            if(arr[i].start >= lastEnding){ //since then can co incident 
+                lastEnding = arr[i].end;
+                count++;
+            }
+        }
+        
+        return count;
+        
+    }   
+}
+class Meeting{
+        int start;
+        int end;
+        public Meeting(int start,int end){
+            this.start = start;
+            this.end = end;
+        }
+    }
