@@ -1,0 +1,38 @@
+import com.sun.tools.javac.Main;
+
+import javax.print.CancelablePrintJob;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Array;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.stream.IntStream;
+
+public class main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine().strip());
+        int coins[] = {1, 2, 5, 10, 20, 50, 100, 500, 1000};
+        main  m = new main();
+        while(T--!=0){
+            int money = Integer.parseInt(br.readLine().strip());
+            System.out.println(m.minCoin(money,coins));
+        }
+    }
+    private int minCoin(int m,int[] coins){
+        int count =0;
+        int i = coins.length-1;
+        while(i>=0 && m>0){
+            if(m-coins[i]>=0){
+                count++;
+                m = m - coins[i];
+            }else{
+                i--;
+            }
+        }
+        return count;
+
+
+    }
+}
