@@ -55,3 +55,31 @@ class Solution {
         
     }
 }
+
+
+//recursion way
+so if we are not taking an element/ignoring the element , hence to avoid duplicate we should also ignore all the next values which are same as this value .
+
+
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        helper(res,new ArrayList<>(),nums,0,false);
+        return res;
+    }
+    
+    public void helper(List<List<Integer>> res, List<Integer> ls, int[] nums, int pos, boolean choosePre) {
+        if(pos==nums.length) {
+            res.add(new ArrayList<>(ls));
+            return;
+        }
+        helper(res,ls,nums,pos+1,false);  //do not pick 
+        if(pos>=1 && nums[pos]==nums[pos-1] && !choosePre) return; //if previous is not chosen we will not choose as well
+        //if the current value is same as previous value and we have ignored the previous value then we should ignore this time as well.
+        ls.add(nums[pos]);
+        helper(res,ls,nums,pos+1,true);
+        ls.remove(ls.size()-1);
+    }
+}
+
