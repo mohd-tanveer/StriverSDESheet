@@ -30,3 +30,28 @@ class Solution {
 above solution is not fully correct
 
 //better and optimized solution 
+
+
+
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);//to remove the duplicates while traversing 
+        List<List<Integer>> res  = new ArrayList<>();
+        powerSet(res,new ArrayList<>(),nums,0);
+        return res;
+        
+    }
+    static void powerSet(List<List<Integer>> result, List<Integer> ds, int[] nums, int index){
+        //add the deep copy into the result 
+        result.add(new ArrayList<>(ds));
+        for(int i = index ; i<nums.length; i++){
+            if(i > index && nums[i]==nums[i-1]) continue;
+            ds.add(nums[i]);
+            powerSet(result,ds,nums,i+1);
+            ds.remove(ds.size()-1);
+            
+        }
+
+        
+    }
+}
