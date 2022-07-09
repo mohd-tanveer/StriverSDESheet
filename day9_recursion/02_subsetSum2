@@ -83,3 +83,57 @@ class Solution {
     }
 }
 
+
+
+
+
+//more easy 
+
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        helper(res,new ArrayList<>(),nums,0,false);
+        return res;
+    }
+    
+    public void helper(List<List<Integer>> res, List<Integer> ls, int[] nums, int pos, boolean choosePre) {
+        if(pos==nums.length) {
+            res.add(new ArrayList<>(ls));
+            return;
+        }
+        
+        //pick it 
+        ls.add(nums[pos]);
+        helper(res,ls,nums,pos+1,true);
+        ls.remove(ls.size()-1);
+        
+        //don't pick it say 1,2,2,3 --> if we are not picking first 2 we should be ignoring second 2 as well
+        
+        while(pos+1 < nums.length && nums[pos]==nums[pos+1]){
+            pos++;
+        }
+        
+        helper(res,ls,nums,pos+1,true);
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
