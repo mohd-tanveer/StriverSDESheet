@@ -1,0 +1,32 @@
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        
+        Set<List<Integer>> res = new HashSet<>();
+        List<Integer> set = new ArrayList<>();
+        powerSet(0,set,nums,res);
+        List<List<Integer>> result  = new ArrayList<>(res);
+        return result;
+        
+    }
+    static void powerSet(int index, List<Integer> set, int[] nums,  Set<List<Integer>> res ){
+        //base condition when index crosses n 
+        if(index == nums.length){
+            res.add(new ArrayList<>(set));
+            return;
+        }
+        //take it 
+       // System.out.println(" index " + index);
+        set.add(nums[index]);
+        powerSet(index+1, set, nums, res);
+        
+        //not take it
+        set.remove(set.size()-1);
+        powerSet(index+1, set, nums, res);
+
+        
+    }
+}
+
+above solution is not fully correct
+
+//better and optimized solution 
