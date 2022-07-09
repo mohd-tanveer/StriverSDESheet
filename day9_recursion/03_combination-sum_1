@@ -1,0 +1,31 @@
+https://leetcode.com/problems/combination-sum/
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result  = new ArrayList<>();
+        
+        combination(0,result,candidates,target,new ArrayList<>());
+        return result;
+        
+    }
+    static void combination(int i,List<List<Integer>> result, int[] can, int target, List<Integer> ds){
+        if(i==can.length){
+            if(target==0){
+                result.add(new ArrayList<>(ds));
+                return;
+            }
+            return;
+        }
+        
+        //pick same element again and again until target is not zero or negative
+        if(can[i] <= target){
+            //pick
+            ds.add(can[i]);
+            combination(i, result, can, target-can[i], ds);
+            //backtrack 
+            ds.remove(ds.size()-1);
+        }
+        //skip the current index and don't pick  
+        combination(i+1, result, can, target,ds);
+    }
+}
