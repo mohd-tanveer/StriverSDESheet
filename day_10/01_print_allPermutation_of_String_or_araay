@@ -1,0 +1,76 @@
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        //using one map function to check if the number is choosen if not then choose
+        //fist fix one of the value and then call recursive function on rest of values 
+        List<List<Integer>> result  = new ArrayList<>();
+        function(nums,result,new ArrayList<>(), new boolean[nums.length]);
+        return result;
+        
+    }
+    static void function(int[] nums, List<List<Integer>> result, List<Integer> ds, boolean[] freq){
+        if(ds.size()==nums.length){
+            result.add(new ArrayList<>(ds));
+            return;
+        }
+        
+        for(int i = 0; i< nums.length; i++ ){
+            if(!freq[i]){
+                freq[i] = true;
+                ds.add(nums[i]);
+                function(nums, result, ds, freq);
+                ds.remove(ds.size()-1);
+                freq[i] = false;
+            }
+        }
+        
+    }
+}
+
+
+
+
+
+
+//for strinng 
+
+public class GFG {
+ 
+    // Function to print all the permutations of str
+    static void printPermutn(String str, String ans)
+    {
+ 
+        // If string is empty
+        if (str.length() == 0) {
+            System.out.print(ans + " ");
+            return;
+        }
+ 
+        for (int i = 0; i < str.length(); i++) {
+ 
+            // ith character of str
+            char ch = str.charAt(i);
+ 
+            // Rest of the string after excluding
+            // the ith character
+            String ros = str.substring(0, i) +
+                         str.substring(i + 1);
+ 
+            // Recursive call
+            printPermutn(ros, ans + ch);
+        }
+    }
+ 
+    // Driver code
+    public static void main(String[] args)
+    {
+        String s = "abb";
+        printPermutn(s, "");
+    }
+}
+
+
+
+
+
+
+
