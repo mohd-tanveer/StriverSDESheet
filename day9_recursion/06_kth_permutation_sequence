@@ -42,3 +42,57 @@ class Solution {
 
 // timelimit will exceed 
 
+
+//faster and better solution 
+
+class Solution {
+    public String getPermutation(int n, int k) {
+       //using mathematical formula as it 
+        /*
+         1  +  {2,3,4}--6
+         2 + {1,3,4} -- 6
+         3 + {1,2,4} -- 6
+         4 + {1,2,3} ---6
+         
+         since it 0 based index let's say k =17, hence update k = k -1 =16
+         now since we need 16ht position and hence our permutaion lies at index 2 which start with 3 say 16/6  == k/fact(6) ==2,
+         now since 12 permutation elemeneted we need 4th permutaion among reamaining number say k = 4
+         which 16%6 = 4, now our problem is reduced to k 
+        
+        one more thing instead of finding factorial each time we can divide the factorial by the size 
+        4! = 24 /4 = 6
+        3! = 6  / 3 = 2
+        2!= 2 /2 =1
+        1! =1
+        */
+        
+        List<Integer> ds = new ArrayList<>();
+        String ans= "";
+        /* for(int i = 0; i<n ;i++){
+            ds.add(i+1);
+        } */
+        int fact = 1;
+        for(int i = 1;i<n; i++){
+            fact *= i;
+            ds.add(i);
+        }
+        ds.add(n);
+        //because first number we will fix say for 16th position we need 6
+        //update k 
+        k = k-1;
+        
+        while(true){
+            ans = ans + ds.get(k/fact);
+            //remove as soon as the element is selected 
+            ds.remove(k/fact); //this takes Big o(n) time complexity 
+            if(ds.size()==0){
+                break;
+            }
+            k = k%fact;
+            fact = fact/ds.size();
+            
+        }
+        
+       return ans;
+    }
+}
