@@ -1,0 +1,52 @@
+class Solution {
+    public void solveSudoku(char[][] board) {
+        solve(board);
+    }
+    static boolean solve(char[][] board){
+        for(int i =0;i<9;i++){
+            
+            for(int j=0;j<9;j++){
+                
+                //check for the position if it is empty or not 
+                if(board[i][j]=='.'){
+                    //if it is empty then check which of the value we can accomdate at the respective location
+                    for(char c ='1';c <= '9';c++){
+                        //can we put this data 
+                        if(isValid(board,i,j,c)){
+                            board[i][j] = c;
+                            if(solve(board)) return true;
+                            else{
+                                //if any position is fail we should backtrack 
+                                board[i][j] = '.';
+                            }
+                        }
+                    }//end for c loop
+                    return false ;//cause no character is able to for one of the location
+                    
+                }
+            }
+        }
+        return true;
+        
+    }
+    static boolean isValid(char[][] board,int row, int col, char c){
+        //check for if the value is presnet inside the row
+        for(int i = 0; i<9; i++){
+            //row
+            if(board[i][col]==c){
+                return false;
+            }
+            //column 
+            if(board[row][i]==c){
+                return false;
+            }
+            //check 3*3 matric//here row = 3*(row/3) +i/3 row should  be changed only after interval of 3 , col = 3*(col/3) + i%3(because col need to change )
+            if(board[3* (row/3) + i/3][3* (col/3) +i%3]==c){
+                return false;
+            }
+            
+        }
+        return true;
+        
+    }
+}
