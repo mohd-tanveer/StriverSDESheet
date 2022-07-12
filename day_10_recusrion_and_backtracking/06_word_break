@@ -1,0 +1,72 @@
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> set  = new HashSet<>(wordDict);
+        return(solve(0, s,set));
+        
+    }
+    static boolean solve(int pos, String s , Set<String> set){
+        //if we have reached to the end of the matarix that means it is valid 
+        if(pos>=s.length()){
+            return true;
+        }
+        for(int i = pos; i < s.length() ; i++){
+            //System.out.println(s.substring(pos,i+1));
+            
+            if(set.contains(s.substring(pos,i+1)) && solve(i+1,s,set)){
+                return true;
+            }
+             
+        }
+         return false;
+       
+    }
+}
+
+above solution gives tle 
+
+//let's use dp or memoization 
+
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> set  = new HashSet<>(wordDict);
+        //memoization aray
+        Boolean[] memo = new Boolean[s.length()];
+        return(solve(0, s,set,memo));
+        
+    }
+    static boolean solve(int pos, String s , Set<String> set, Boolean[] memo){
+        //if we have reached to the end of the matarix that means it is valid 
+        if(pos==s.length()){
+            return true;
+        }
+        if(memo[pos]!=null) return memo[pos];
+        
+        for(int i = pos; i < s.length() ; i++){
+            
+            if(set.contains(s.substring(pos,i+1)) && solve(i+1,s,set,memo)){
+                //System.out.println(pos);
+                //it is a position when one of the string is already solved
+                return memo[pos] = true;
+            }
+             
+        }
+        return memo[pos] = false;
+       
+    }
+}
+
+
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int n=s.length();
+        boolean[] dp=new boolean[n+1];
+        dp[n]=true;
+        Set<String> dict=new HashSet(wordDict);
+        for(int i=n-1;i>=0;i--) {
+            for(int j=i+1;!dp[i] && j<=n;j++) { 
+                dp[i] = dp[j] & dict.contains(s.substring(i,j));
+            }
+        }
+        return dp[0];   
+    }
+}
