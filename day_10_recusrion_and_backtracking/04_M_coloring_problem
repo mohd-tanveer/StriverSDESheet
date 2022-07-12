@@ -1,0 +1,72 @@
+// { Driver Code Starts
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int tc = scan.nextInt();
+
+        while (tc-- > 0) {
+            int N = scan.nextInt();
+            int M = scan.nextInt();
+            int E = scan.nextInt();
+
+            boolean graph[][] = new boolean[N][N];
+
+            for (int i = 0; i < E; i++) {
+                int u = scan.nextInt() - 1;
+                int v = scan.nextInt() - 1;
+                graph[u][v] = true;
+                graph[v][u] = true;
+            }
+
+            System.out.println(new solve().graphColoring(graph, M, N) ? 1 : 0);
+        }
+    }
+}
+// } Driver Code Ends
+
+
+class solve {
+    // Function to determine if graph can be coloured with at most M colours
+    // such
+    // that no two adjacent vertices of graph are coloured with same colour.
+     public boolean graphColoring(boolean graph[][], int m, int n) {
+        //n -> nodes we have
+        //m -> colors we have
+        int[] color = new int[n]; //this is an array that contains the colors assigned to each of the n nodes
+        Arrays.fill(color, -1);
+        return helper(graph, m, n, 0, color);
+    }
+    boolean helper(boolean[][] graph, int noOfColor, int vertices, int start_index, int[] colorarray){
+        if(start_index==vertices){
+            return true; //if we are able to go to the last vertex then yes task is accomplished
+        }
+        for(int i=0; i<noOfColor; i++){ // ew are gonna try out all colors for each index and check which combination returns true
+            if(safe(i, start_index, graph, vertices, colorarray)){ //if it is safe to assigncolor "i" to node "start_index"
+                colorarray[start_index]=i; //if it is safe for this color to be at this index then we will put this color at this index in our color array
+                if(helper(graph, noOfColor, vertices, start_index+1, colorarray)) return true; 
+                colorarray[start_index]=-1; 
+                // once we are sure that this color at this node is fine we go ahead and check if other colors 
+                //at subsequent nodes are fine if they are all fine then we return immediately with a true
+                //however if anyone returns false then we backtrack and change the current color back to -1
+            }
+        }
+        return false;
+    }
+    boolean safe(int curr_color, int index, boolean[][] graph, int vertices, int[] color){
+        //checking if curr_color can be assigned to this index such that
+        //no neighbour has the same color
+        for(int k=0; k<vertices; k++){
+            if(graph[index][k]==true && color[k]==curr_color) return false;
+            //now the first condition means that the given index is a neighbour, how it works is my current index is for eg 2 and 
+            //other indices are 1,3,4,5 (total 5 indices) then are 2-1, 2-2, 2-3, 2-4, 2-5 adjacent/ neighbours? if 2-4 are connected
+            //neighbours then graph[2][4] will be true. the second condition checks if the other index (other than current one) has
+            //the same color (that i just assigned to current index)
+            //CONCLUDING: if neightbours and same color then false otherwise ofcourse true
+        }
+        return true;
+    }
+}
