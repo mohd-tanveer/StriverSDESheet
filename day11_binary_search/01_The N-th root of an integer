@@ -1,0 +1,81 @@
+import java.util.*;
+import java.lang.*;
+public class Solution {
+    public static double findNthRootOfM(int n, long m) {
+    	// Write your code here.
+        //using binary search because the function is monotonically increasing 
+        // [1 ... . . .. . .27] rather 
+        // [1, 1.1,1.2,1.3-----2.1----2.9,3.0,3.1-------26.9,27]
+        //this for only one decimal places we need 10^6 decimal 
+        
+         double low = 1;
+        double high = m;
+        double eps = 1e-7; 
+        
+        while((high - low) > eps) {
+            double mid = (low + high) / 2.0; 
+            if(multiply(mid, n) < m) {
+                low = mid; 
+            }
+            else {
+                high = mid; 
+            }
+        }
+        return low;
+    }
+    static double multiply(double number, int n ){
+        double ans = 1.0;
+        for(int i =1;i<=n ;i++){
+            ans = ans*number;
+        }
+        return ans;
+    }
+}
+
+
+//we can also use directly math.pow(a,b);
+
+/*
+    Time Complexity : O(log(M) * log(N))
+    Space Complexity : O(1),
+
+    where N and M are given integers.
+*/
+
+//newton raphson method 
+
+public class Solution {
+
+    public static double findNthRootOfM(int n, long m) {
+
+        // Variable to store maximum possible error in order
+        // to obtain the precision of 10^(-6) in the answer.
+        double error = 1e-7;
+        
+        // Difference between the current answer, and the answer
+        // in next iteration, which we take as big as possible initially.
+        double diff = 1e18;
+
+        // Guessed answer value
+        double xk = 2;
+
+        // We keep on finding the precise answer till the difference between
+        // answer of two consecutive iteration become less than 10^(-7).
+        while (diff > error) {
+
+            // Answer value in the next iteration.
+            double xk_1 = (Math.pow(xk, n) * (n - 1) + m) / (n * Math.pow(xk, n - 1));
+            
+            // Difference of answer in consecutive states updated.
+            diff = Math.abs(xk - xk_1);
+            
+            // Updating the current answer with the answer of next iteration.
+            xk = xk_1;
+        }
+
+        // Returning the nthRootOfM with precision upto 6 decimal places
+        // which is xk.
+        return xk;
+    }
+
+}
