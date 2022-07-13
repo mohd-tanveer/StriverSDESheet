@@ -16,12 +16,16 @@ class Solution {
         //using bst
         
         // find the break point such that all the elements that are in left appears twice 
-        // and from right single elements should start appearing and 
         // one more catch is second occurrance is at odd number 
         // and first occurance is at even index 
-        // low > high, low-> is immediately after high , and high is appearing at one index before single element
         
-        // why we are taking high -1 for high because , when we want for cross high and low will contian or ans so in case our ans is relies at last time
+        // [ 1 1 2 2 3 4 4 8 8]  , so if the index is odd and it's value is equal to the value which is present at even index it means our unique element doesn't recide on left rather right side
+        // for example mid index is 3 hence value of 2 and value of index 3 is same so we should do our searching in the right side because everything is fine on left ,
+        
+        // now after that low = 4 hence index 6 at six index which is even and hence the second ocrrance should be at odd position but it fails so that means our ans lies left side now we will move high = mid -1
+        
+        // but in case let's say the index is even and next inedex is odd is same which means or ans lies at the right side so we will move at low at mid+1 to search in the right half 
+        //instead of using boundary cases we can reduce
         
         int low = 0;
         int high = nums.length-2;
@@ -39,3 +43,40 @@ class Solution {
         
     }
 }
+
+
+
+//anpother longer approach
+class Solution {
+
+        
+        int high = nums.size()-1;
+        int low = 0;
+        int mid;
+        
+        //Boundary cases
+        if(high==0)
+            return nums[0];
+        else if(nums[0]!=nums[1])
+            return nums[0];
+        else if(nums[high]!=nums[high-1])
+            return nums[high];
+
+        while(low<=high)
+        {
+            mid = low + (high-low)/2;
+            //Unique element condition
+            if(nums[mid]!=nums[mid+1] && nums[mid]!=nums[mid-1])
+                return nums[mid];
+            
+            if(((mid%2)==0 && nums[mid]==nums[mid+1])
+               ||  ((mid%2)==1 && nums[mid]==nums[mid-1]))
+                low = mid+1;
+            else
+                high = mid-1;
+            
+        }
+        return -1;
+    }
+};
+
