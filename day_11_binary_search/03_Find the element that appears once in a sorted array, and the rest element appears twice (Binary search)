@@ -8,3 +8,34 @@ class Solution {
         return elem;
     }
 }
+
+
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        // appraoch one is using xor p^p =0 , p^0=p
+        //using bst
+        
+        // find the break point such that all the elements that are in left appears twice 
+        // and from right single elements should start appearing and 
+        // one more catch is second occurrance is at odd number 
+        // and first occurance is at even index 
+        // low > high, low-> is immediately after high , and high is appearing at one index before single element
+        
+        // why we are taking high -1 for high because , when we want for cross high and low will contian or ans so in case our ans is relies at last time
+        
+        int low = 0;
+        int high = nums.length-2;
+        while(low<=high){
+            int mid = (low+high)/2;
+            if(nums[mid]==nums[mid^1]){
+                //find the left half  breakpoint 
+                low = mid +1;
+            }else{
+                high = mid-1;
+            }
+        }
+        return nums[low];
+        
+        
+    }
+}
