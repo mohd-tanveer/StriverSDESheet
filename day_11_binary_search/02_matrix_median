@@ -16,3 +16,47 @@ public class Solution
         return ls.get(ls.size()/2);
 	}
 }
+
+
+
+
+public class Solution {
+    public int findMedian(ArrayList<ArrayList<Integer>> A) {
+        int low = 0;
+        int high = Integer.MAX_VALUE;
+        int n  = A.size();
+        int m  = A.get(0).size();
+        int ans = 0;
+        while(low<=high){
+            int mid = low +(high-low)/2;
+            int count = 0;
+            for(int i =0;i<n;i++){
+                count+= binarySearchOnRows(A.get(i),mid);
+            }
+            if(count<=n*m/2){ //if count is equal to half of the size it means wer are at middle but possibility is that there are multiple re
+                              //repetive numbers so we still need to continue check               
+                ans = mid;
+                low = mid+1;
+            }
+            else{
+                high = mid-1;
+            }
+        }
+        return ans;
+    }
+    static int binarySearchOnRows(ArrayList<Integer> list,int k){
+        int len = 0;
+        int low = 0;
+        int high = list.size()-1;
+        while(low<=high){
+            int mid = low + (high-low)/2;
+            if(list.get(mid)<k){
+                len = mid+1;;
+                low = mid+1;
+            }else{
+                high = mid-1;
+            }
+        }
+        return len;
+    }
+}
