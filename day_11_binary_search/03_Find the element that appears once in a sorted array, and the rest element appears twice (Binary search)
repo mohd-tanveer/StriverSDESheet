@@ -1,0 +1,10 @@
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        // appraoch one is using xor p^p =0 , p^0=p
+        int elem = 0;
+        for(int i : nums){
+            elem = elem^i;
+        }
+        return elem;
+    }
+}
