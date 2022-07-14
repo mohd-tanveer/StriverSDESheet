@@ -1,0 +1,45 @@
+import java.util.*;
+public class Solution {
+    public static int chessTournament(int[] positions, int n,  int c) {
+        // Write your code here.   
+        // we can start checking by 1 and try if placing is possible or not
+        /*
+        1  we can place the chess players with distance one or more than one
+        2  ...
+        3 ... yes it is alowed 
+        4 not it is not allowed , so 4 onwards it won't be allowed 
+        so we can say the function is monotonoacially increasing funtion hence use binary search 
+        so minimum is 1 max could be last - first
+        this is also a cow problem , find the minimum largest distance 
+        
+        */
+        Arrays.sort(positions);
+        int low = 1;
+        int high = positions[n-1] - positions[0];
+        int result = -1;
+        while(low<=high){
+            int mid = (low+high)>>1;
+            if(canPlaceChessPlayerPlaced(mid,c,positions,n)){
+                result  = mid;
+                low = mid+1;//will try to maximize 
+            }else{
+                high = mid -1;
+            }
+        }
+        return result;
+        
+    }
+    static boolean canPlaceChessPlayerPlaced(int dist, int c,int[] a, int n ){
+        int lastPlayerPlaced = a[0] ;
+        int count = 1;
+        for(int i =1; i<n;i++){
+            if(a[i]-lastPlayerPlaced >=dist){
+                count++;
+                lastPlayerPlaced = a[i];
+            }//else don't do anything 
+            if(count==c){return true;}
+        }
+        return false;
+    }
+
+}
