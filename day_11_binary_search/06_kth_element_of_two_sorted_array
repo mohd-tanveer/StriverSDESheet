@@ -88,3 +88,4 @@ class Solution {
 }
 
 above code can be optimize look for striver solution tc o(k)
+//for log(n+m) we can go for last solution using median sorted
