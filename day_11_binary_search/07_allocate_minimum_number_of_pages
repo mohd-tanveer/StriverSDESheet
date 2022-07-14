@@ -1,0 +1,45 @@
+public class Solution {
+    public int books(ArrayList<Integer> A, int B) {
+        if(B>A.size()) return -1;
+       /* A = [12, 34, 67, 90]
+       logic
+       we can do B partion and return the minimum of maximum out of them but tc is very high
+       instead let's use BST,
+       intution is : 
+       let's say B =1, so minimum pages we can allocate to student is 12
+       and maximum pages we can allocate to student is 203(summation of all numbers)
+       so try with maximum and go towards minimum , middle of low and high is 107 and keeping it barries try to distribute 
+       */
+       int low = A.stream().min(Integer::compareTo).get();
+       //int low = A.get(0);
+       int high = A.stream().reduce(0,Integer::sum);
+       int result = -1;
+       while(low<=high){
+           int mid = (low+high)>>1;
+           if(allocationIsPossible(mid,A,B)){
+               result = mid;
+               high = mid-1;
+           }
+           else{
+               low = mid +1;
+           }
+       }
+       return result;
+    }
+    static boolean allocationIsPossible(int barrier,ArrayList<Integer> A, int B){
+        int count = 0;//becasue we think atleast one allocation is possible
+        int summationOfPages =0;
+        for(int i = 0 ;i < A.size();i++){
+            if(A.get(i)>barrier) return false;
+            if(summationOfPages+A.get(i) > barrier){
+                count+=1;
+                summationOfPages = A.get(i);
+            }else{
+                summationOfPages+=A.get(i);
+            }
+        }
+        //System.out.println(allocatedStudent);
+        if(count < B){return true;}
+        return false;
+    }
+}
