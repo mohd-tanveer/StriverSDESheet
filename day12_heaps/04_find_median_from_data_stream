@@ -1,0 +1,33 @@
+class MedianFinder {
+    
+    List<Integer> lst  = new ArrayList<>();
+    public MedianFinder() {
+        
+    }
+    
+    public void addNum(int num) {
+        lst.add(num);
+    }
+    
+    public double findMedian() {
+        //
+        Collections.sort(lst);
+        //instead of using soritinng we can insert the data into max heap or use priority queue and then based on size and index get the kth and kth-1 data 
+        if(lst.size()%2==0){
+            return (double)(lst.get(lst.size()/2) + lst.get(lst.size()/2-1))/2;
+        }
+        return  (double)(lst.get(lst.size()/2));
+        
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
+ 
+ 
+ //better solution would be to use priority key and sort it in increasing order 
+ 
