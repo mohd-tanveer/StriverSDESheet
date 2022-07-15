@@ -1,0 +1,139 @@
+public class Solution {
+    public ArrayList<Integer> solve(ArrayList<Integer> A, ArrayList<Integer> B, int C) {
+            //aproach 1 : take all the possible combination of sum and then sort the array 
+        // sort both arrays A and B
+        
+        Collections.sort(A);
+        Collections.sort(B);
+        
+         ArrayList<Integer> result = new ArrayList<>();
+        // Max heap which contains Pair of
+        // the format (sum, (i, j)) i and j are
+        // the indices of the elements from
+        // array A and array B which make up the sum.
+        
+        PriorityQueue<PairSum> sums
+            = new PriorityQueue<PairSum>();
+         
+         // pairs is used to store the indices of
+        // the  Pair(i, j) we use pairs to make sure
+        // the indices does not repeat inside max heap.
+        
+        HashSet<Pair> pairs = new HashSet<>();
+         
+        // initialize the heap with the maximum sum
+        // combination ie (A[N - 1] + B[N - 1])
+        // and also push indices (N - 1, N - 1) along
+        // with sum.
+        
+        int l = A.size() - 1;
+        int m = B.size() - 1;
+        pairs.add(new Pair(l, m));
+        sums.add(new PairSum(A.get(l) + B.get(m), l, m));
+         
+        // iterate upto K
+        
+        for (int i = 0; i < C; i++)
+        {
+            // Poll the element from the
+            // maxheap in theformat (sum, (l,m))
+            
+            PairSum max = sums.poll();
+            //System.out.println(max.sum);
+            result.add(max.sum);
+            l = max.l - 1;
+            m = max.m;
+            
+            // insert only if l and m are greater
+            // than 0 and the pair (l, m) is
+            // not already present inside set i.e.
+            // no repeating pair should be
+            // present inside the heap.
+            //this is for i,J+1
+            
+            if (l >= 0 && m >= 0
+                && !pairs.contains(new Pair(l, m)))
+            {
+                // insert (A[l]+B[m], (l, m))
+                // in the heap
+                sums.add(new PairSum(A.get(l) + B.get(m), l, m));
+                pairs.add(new Pair(l, m));
+            }
+ 
+            l = max.l;
+            m = max.m - 1;  //since we are starting from last 
+ 
+            // insert only if l and m are
+            // greater than 0 and
+            // the pair (l, m) is not
+            // already present inside
+            // set i.e. no repeating pair
+            // should be present
+            // inside the heap.
+            //this is i+1,j
+            
+            if (l >= 0 && m >= 0
+                && !pairs.contains(new Pair(l, m)))
+            {
+                // insert (A[i1]+B[i2], (i1, i2))
+                // in the heap
+                sums.add(new PairSum(A.get(l) + B.get(m), l, m));
+
+                pairs.add(new Pair(l, m));
+            }
+        }
+        //Collections.sort(result,(i1,i2)->i1.compareTo(i2));
+        return result; 
+    }
+    
+    public static class PairSum implements Comparable<PairSum> {
+ 
+        public PairSum(int sum, int l, int m)
+        {
+            this.sum = sum;
+            this.l = l;
+            this.m = m;
+        }
+ 
+        int sum;
+        int l;
+        int m;
+        
+        @Override 
+        public int compareTo(PairSum o)
+        {
+            return Integer.compare(o.sum, sum);
+        }
+       
+    }
+    public static class Pair {
+ 
+        public Pair(int l, int m)
+        {
+            this.l = l;
+            this.m = m;
+        }
+ 
+        int l;
+        int m;
+ 
+        
+        @Override public boolean equals(Object o)
+        {
+            if (o == null) {
+                return false;
+            }
+            if (!(o instanceof Pair)) {
+                return false;
+            }
+            Pair obj = (Pair)o;
+            return (l == obj.l && m == obj.m);
+        }
+ 
+        @Override public int hashCode()
+        {
+            return Objects.hash(l, m);
+        }
+        
+    }
+}
