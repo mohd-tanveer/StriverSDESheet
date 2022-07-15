@@ -1,0 +1,44 @@
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        //using max_heapify we can return the data each time
+        int result = -1;
+        int sizeOfArray = nums.length;
+        for(int i = sizeOfArray/2; i>=0;i--){
+            //build max heap 
+            //System.out.println(" i while build maxi heap "+i);
+            MaxHeapify(nums,i,sizeOfArray);
+            //System.out.println(Arrays.toString(nums));
+
+        }
+        while(k-->0){
+            //extract max key
+            
+            result = nums[0];
+            System.out.println(result);
+            nums[0]  = nums[sizeOfArray-1];
+            sizeOfArray--;
+            MaxHeapify(nums,0,sizeOfArray);
+        }
+        return result;
+    }
+    static void MaxHeapify(int[] A, int i, int size){
+        int left = 2*i+1;
+        int right = 2*i+2;
+        int largest = -1;
+        if(left < size && A[left] > A[i] ){
+            largest  = left;
+        }else{
+            largest = i;
+        }
+        if(right < size && A[right] > A[i] && A[right]>A[left]){ // when left and right both are greater but we need maximum of them
+            largest = right;
+        }
+        if(largest!=i){
+            int tem = A[i];
+            A[i] = A[largest];
+            A[largest]= tem;
+            MaxHeapify(A,largest,size);
+        }
+        
+    }
+}
