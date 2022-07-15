@@ -42,3 +42,51 @@ class Solution {
         
     }
 }
+
+
+
+///using quick sort algorithm 
+
+
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        //using max_heapify we can return the data each time
+        //another approach is to use quick select algorithm , 
+        // where the pivot elements tells that all the element which is less than that are on left and all the elemetns that is greater than that is on right side of the pivot.
+        // but if say index = k  == pivot-1 index which means this is the ans cause all the k-1th element will be on left side and this the pivot element is the kt element.
+        
+        //for kth largest element is 2 which means we need len(nums)-k-1  the index data
+        
+        k = nums.length-k; //k = 6th  means which need o th , k =5th = 1, k =2nd means = 6-2=4
+        return(quickSelect(nums,0,nums.length-1,k));
+        
+    }
+    
+    static int quickSelect(int nums[],int start , int end,int k){
+        int pivot = nums[end];
+        int index= start;
+        for(int i =start; i<end; i++){
+            if(nums[i]<=pivot){
+                int temp = nums[i];
+                nums[i] = nums[index];
+                nums[index] = temp;
+                index = index+1;
+            }
+        }//at the end swap with pivot
+        int temp = nums[index];
+        nums[index] = pivot;
+        nums[end] = temp;
+        
+        System.out.println("index " +index);
+        if(index < k){ //3<4 so we want to search in the second half
+            return quickSelect(nums,index+1,end,k);
+            }
+        else if(index > k){ //p>k //which means our ans lies in the left portion  the array 
+            return quickSelect(nums,start,index-1,k);
+        }else{
+            return nums[index];
+        }
+        
+    }
+    
+}
