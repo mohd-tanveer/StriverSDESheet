@@ -1,0 +1,24 @@
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        // the the approach have a linkedHashMap and store the result in key value pair 
+        Map<Integer,Integer> m = new LinkedHashMap<>();
+        for( int i: nums){
+            if(m.containsKey(i))
+                m.put(i,m.get(i)+1);
+            else
+                m.put(i,1);
+        }
+        List<Integer> r =  m.entrySet()
+                .stream()
+                .sorted((i,j)->j.getValue().compareTo(i.getValue())) // sort it based on maximum value of count
+                .limit(k)
+                .map(Map.Entry::getKey)  // store the key of those values
+                .collect(Collectors.toList());
+        
+        return r.stream().mapToInt(Integer::intValue).toArray();
+        
+        //neverhtless we an also combine above tow line , still this is not an efficient solution 
+    }
+}
+
+// let's find out better than o(nlogn) alogorithm 
