@@ -1,0 +1,68 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Solution 
+{
+	public static ArrayList<Integer> mergeKSortedArrays(ArrayList<ArrayList<Integer>> kArrays, int k)
+	{
+		// Write your code here.
+        
+        // the approach is to use merge two soreted array approach and solve the problem until all the arrays are not merged  or add all the array data into flat structure of arry and then sort 
+        ArrayList<Integer> result = (ArrayList<Integer>)kArrays.stream().flatMap(Collection::stream).sorted().collect(Collectors.toList());
+        return result;
+
+        
+	}
+}
+
+
+// the better solution is to use min heap
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Solution 
+{
+	public static ArrayList<Integer> mergeKSortedArrays(ArrayList<ArrayList<Integer>> lst, int k)
+	{
+		// Write your code here.
+        
+        // the approach is to use merge two soreted array approach and solve the problem until all the arrays are not merged  or add all the array data into flat structure of arry and then sort 
+       PriorityQueue<Data> pq = new PriorityQueue<>((d1,d2)->d1.val-d2.val);
+        //instead of writing comparable interface we can pass this to in priority key as well
+       ArrayList<Integer> result = new ArrayList<>();
+        //since the array is sorted let's insert the data for first ever index
+        for(int i = 0 ;i<k;i++){
+            pq.add(new Data(lst.get(i).get(0),0,i));
+        }
+        while(!pq.isEmpty()){
+            Data temp = pq.poll();//poll the min 
+            result.add(temp.val); // store the value in the result 
+            //now we have to store the corresponding data 
+            //before we need check if it is not the boundary
+            if(temp.index+1 < lst.get(temp.ithArray).size()){
+            pq.add(new Data(lst.get(temp.ithArray).get(temp.index+1),temp.index+1,temp.ithArray));
+            }
+        }
+        return result;
+
+        
+	}
+    
+    static class Data {//implements Comparable<Data>{
+        int val;
+        int index;
+        int ithArray;
+        public Data(int val, int index, int ithArray){
+            this.val = val;
+            this.index = index;
+            this.ithArray = ithArray;
+        }
+        /*
+        @Override
+        public int compareTo(Data o){
+            return this.val-o.val;
+        }
+        */
+    }
+    
+}
