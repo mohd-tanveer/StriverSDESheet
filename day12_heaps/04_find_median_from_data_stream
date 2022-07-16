@@ -31,3 +31,77 @@ class MedianFinder {
  
  //better solution would be to use priority key and sort it in increasing order 
  
+class MedianFinder {
+    
+    //List<Integer> lst  = new ArrayList<>();
+    //the approach is to use both min and max heap and return the max heaps data for odd number which means max heap size will always be more than one of min heap size in case of total odd numbers , where as if even number the size of both min and max heap will be same so wee can return the max and min and then do average
+    //   //as we know the priority order stores in natural ordering 
+    
+    PriorityQueue<Integer> minHeap = new PriorityQueue<>();/// 1 2 3 | 4 5 second half should come in min heap and first half should in max heap 
+    PriorityQueue<Integer>  maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+ 
+    public MedianFinder() {
+        
+    }
+    
+    public void addNum(int num) {
+        // max heap size will always be more than  min heap in case of odd numbers
+        int lpsize  = maxHeap.size();
+        int rpsize = minHeap.size();  // size of left and right partions 
+        
+        if(lpsize == 0){
+            //this means this is the first element
+            maxHeap.add(num);
+        }else if(lpsize==rpsize){ // both partion have equal number of elements
+            //which means even size one element must go in to max heap
+            if(num < minHeap.peek() ){//if num is less which means it will go left partion 
+                maxHeap.add(num);
+            }else{//since the size of both partion is same and this data needs to be send to right partion we will move one data from right ot left to maintain the odd order property 
+                int temp = minHeap.poll();
+                maxHeap.add(temp);
+                minHeap.add(num);
+                
+            }
+            
+        }else{//since we are sure that lpSize will always be either equal or greater 
+            //this is the condition when lpsize> rpsize which means \
+            
+            if(num>maxHeap.peek()){//since left alrady have one extra element we will push at least one elemrnt right partion 
+                minHeap.add(num);
+            }else{
+                int temp = maxHeap.poll();
+                minHeap.add(temp);
+                maxHeap.add(num);
+            }
+            
+    
+        }
+        
+    }
+    
+    public double findMedian() {
+        //
+        //Collections.sort(lst);
+        //instead of using soritinng we can insert the data into max heap or use priority queue and then based on size and index get the kth and kth-1 data 
+        // the elements needs to be popped but how to add again 
+        
+        int lsize = maxHeap.size();
+        int rsize = minHeap.size();
+        if(lsize > rsize)  //Return top of maxheap for odd no of elements
+            return (double)maxHeap.peek();
+        else    //Else return avg of top of maxheap and minheap
+            return (double)(maxHeap.peek()+minHeap.peek())/2;
+        
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
+ 
+ 
+ 
+ 
