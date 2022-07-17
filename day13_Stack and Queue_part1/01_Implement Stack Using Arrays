@@ -1,1 +1,47 @@
 
+public class Stack {
+    int size;
+    int arr[];
+    int top ;
+    public Stack(int size){
+        this.size = size;
+        arr = new int[size];
+        top = -1;
+    }
+    
+    
+    void push(int num) {
+        // Write your code here.
+        if(size-top != 1){ //this can also be written as if(size-topp != 1) // when size at 5 and index is also last postion which means it is full also if size is 0 -(-1) ==1 which means size is zero
+        arr[++top] = num;
+        }
+        //System.out.println(arr[top]);
+     }
+    int pop() {
+        // Write your code here.
+        //remove and print 
+        if(top!=-1)
+            return(arr[top--]);
+        return -1;
+    }
+    int top() {
+        // Write your code here.
+        if(top!=-1)
+            return(arr[top]);
+        return -1;
+    }
+    int isEmpty() {
+        // Write your code here.
+        if(top == -1){
+            return (int)1;
+        }
+        return (int)0;
+    }
+    int isFull() {
+        // Write your code here.
+        if (top==size-1){
+            return (int)1;
+        }
+        return (int)0;
+    }
+}
