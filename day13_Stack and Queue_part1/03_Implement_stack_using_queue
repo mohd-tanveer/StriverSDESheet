@@ -1,0 +1,47 @@
+class MyQueue {
+    
+    Stack<Integer> enqstack = new Stack();
+    Stack<Integer> dqstack = new Stack();
+
+    public MyQueue() {
+        
+    }
+    
+    public void push(int x) {
+        // in any scenario we have push it in eqnue, only take care for poping  
+        enqstack.push(x);
+    }
+    
+    public int pop() {
+        if(dqstack.isEmpty()){
+            while(!enqstack.isEmpty()){
+                dqstack.push(enqstack.pop());
+            }
+        }
+        //if both are empty return -1
+        return dqstack.pop();
+        
+    }
+    
+    public int peek() {
+        if(dqstack.isEmpty()){
+            while(!enqstack.isEmpty()){
+                dqstack.push(enqstack.pop());
+            }
+        }
+        return dqstack.peek();
+    }
+    
+    public boolean empty() {
+        return enqstack.isEmpty() && dqstack.isEmpty();
+    }
+}
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue obj = new MyQueue();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.peek();
+ * boolean param_4 = obj.empty();
+ */
