@@ -1,0 +1,30 @@
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        char[] arr = s.toCharArray();
+        System.out.println(Arrays.toString(arr));
+        for(int i =0; i< arr.length ; i++){
+            if(arr[i] == '(' || arr[i] == '{' || arr[i] == '[') {
+                //if it is opening braces we need to push 
+                stack.push(arr[i]);
+            }else{
+                if(stack.isEmpty()) return false; // if it is a closing bracket and stack is also empty which means there is opening braces exist for this closing braces
+                
+                else{
+                    char ch = stack.pop(); // it should be opening bracket 
+                    if((arr[i] == ')' && ch == '(' ) || (arr[i] == '}' && ch == '{') || (arr[i] == ']' && ch == '[') ){
+                        continue;
+                    }else{
+                    return false;
+                    }
+                }
+            }
+        }
+        
+        if(stack.isEmpty()){
+            return true;
+        }
+        return false;
+        
+    }
+}
