@@ -1,0 +1,32 @@
+import java.util.*;
+public class Solution {
+
+    public static void sortStack(Stack<Integer> stack) {
+        // Write your code here.
+        if(stack.isEmpty()){
+            return ; //if there is one element
+        }
+        //sort n-1 elements from the stack
+        int data = stack.peek();
+        stack.pop();
+        sortStack(stack); //after sorting let's insert the data in sorted manner 
+        //if data is greater than or equal last element we can isert directly
+        insert(stack,data);
+    }
+    static void insert(Stack<Integer> stack , int data){
+        //stack is empty or last data is greater than or equal last element insert
+        if(stack.isEmpty() || stack.peek() <= data){
+           //here we are trying to insert minimum data first so that while popping maximum data kept at top     
+            stack.push(data);
+            return;
+        }
+        //else remove the last element recursively and add
+        int temp = stack.peek();
+        stack.pop();
+        //System.out.println("data on each insert " + temp);
+
+        insert(stack,data);//please insert the data not the temp which you removed 
+        stack.push(temp);
+    }
+
+}
