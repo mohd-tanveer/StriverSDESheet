@@ -25,3 +25,43 @@ class Solution {
         
     }
 }
+
+
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        int[] res = new int[nums1.length];
+        Stack<Integer> stack  = new Stack<Integer>();
+        int[] ans  = new int[nums1.length];
+        HashMap<Integer,Integer> map = new HashMap<>(); //to retrive the data in const time
+
+        
+        //let's find the next greater element for the array 
+        int[] nextGtEl = new int[nums2.length];
+        for(int i = nums2.length-1; i>=0 ;i--){
+           while(!stack.isEmpty() && nums2[i] >= stack.peek()){
+               stack.pop();
+           }
+            if(i>=0 ){//which means greater already exist so pop all 
+                if(!stack.isEmpty() ){ //since stack is not emty hence the element is less that the current element of stack hence 
+                    nextGtEl[i] = stack.peek();
+                }else{
+                    //ther is not greater element or stack is empty 
+                    nextGtEl[i] = -1;
+                }
+                
+            }
+            stack.push(nums2[i]);
+        }
+        
+        for(int i = 0 ; i< nums2.length ;i++){
+            map.put(nums2[i],nextGtEl[i]);
+        }
+       
+        for(int i = 0 ; i< nums1.length ;i++){
+            ans[i] = map.get(nums1[i]);
+        }
+    
+        return ans;
+        
+    }
+}
