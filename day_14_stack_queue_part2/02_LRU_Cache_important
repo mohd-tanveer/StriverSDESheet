@@ -1,0 +1,53 @@
+class LRUCache {
+    private final int size ;
+    private HashMap<Integer,Integer> map ;
+    Deque<Integer> dq = new LinkedList<>();    
+    
+    public LRUCache(int capacity) {
+        size = capacity;
+        map = new HashMap<>(capacity);
+    }
+    
+    public int get(int key) {
+        
+        //while getting we have recently used this as well so we need to take it to top of the queue
+        
+        if(map.containsKey(key)) {
+            dq.remove(key);
+            dq.push(key);  // remove and update it to top 
+            return map.get(key);
+        }
+        return -1;
+    }
+    
+    public void put(int key, int value) {
+        //before inserting the data we need correct it
+        if(!map.containsKey(key)){
+            //we have reached the limit so we need to reomve the last element present in the cache 
+             //remove the least recently used data from queue as well as from the map
+            if(dq.size() == size){
+                
+                int t = dq.removeLast();
+                System.out.println(" key to remove from map and dq "+t );
+                map.remove(t);  //remove from the front end 
+            }
+        }else{
+            //the page does exist and now move it to top
+            dq.remove(key); //remove place it at top
+        }
+        
+        dq.push(key); // this pushes(dq.push) the element in front basically haid 
+        //if we are using add function we should use removeFirst to remove the last used data;
+        map.put(key,value);
+        
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+ 
+ the above solution gives tle
