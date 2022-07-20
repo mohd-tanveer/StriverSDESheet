@@ -51,3 +51,82 @@ class LRUCache {
  */
  
  the above solution gives tle
+ 
+ 
+ class LRUCache {
+    private final int size ;
+    private HashMap<Integer,Node> map ;
+    //Deque<Integer> dq = new LinkedList<>();  
+    Node head = new Node(0,0);
+    Node tail = new Node(0,0);
+    
+    public LRUCache(int capacity) {
+        size = capacity;
+        map = new HashMap<>(capacity);
+        head.next = tail;
+        tail.prev = head;
+    }
+    
+    public int get(int key) {
+        
+        //while getting we have recently used this as well so we need to take it to top of the queue
+        
+        if(map.containsKey(key)) {
+            Node node = map.get(key); // get the node as value 
+            remove(node); // remove that particualr key and move it top by passing address we can do it in o(1)
+            insert(node);  // remove and update it to top 
+            return node.value; //so instead of string the data in dq we are directly storing into map 
+        }
+        return -1;
+    }
+    
+    public void put(int key, int value) {
+        //before inserting the data we need correct it
+        if (map.containsKey(key)) { //if it contains the remove the data and move to top 
+            remove(map.get(key)); //by passing address
+        }
+        if (map.size() == size) {
+            remove(tail.prev); //if size is exceeded remove the top element 
+        }
+        insert(new Node(key, value)); //perfrom the insertion in any sitatatation 
+        
+    }
+    public void remove(Node node){
+        //we need to remove from map as well
+        map.remove(node.key);
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        node.next = null;
+        node.prev = null;
+    }
+    public void insert(Node node){
+        map.put(node.key,node);
+        
+        node.next = head.next;
+        head.next.prev = node;
+        head.next = node;
+        node.prev = head;
+        
+    }
+    
+}
+
+class Node{
+    int key;
+    int value;
+    Node prev;
+    Node next;
+    
+    public Node(int key, int value){
+        this.key   = key;
+        this.value  = value;
+    }
+}
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+ 
+ o(1) solution 
