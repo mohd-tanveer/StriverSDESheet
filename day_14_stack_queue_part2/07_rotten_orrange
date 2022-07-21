@@ -1,0 +1,80 @@
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        //if there is 
+        int mint = 0;
+        int row = grid.length;
+        int col = grid[0].length;
+        Queue<Pair> st = new LinkedList<>();
+        // push all the index in map which are rotten 
+        for(int i = 0 ; i<row; i++ ){
+            for(int j = 0;j<col ;j++){
+                if(grid[i][j] == 2){
+                    st.add(new Pair(i,j));
+                }
+            }
+        }
+        while(!st.isEmpty()){
+            int size  = st.size();
+            while(size-->0){
+            Pair p = st.poll();
+            rotten(p.i,p.j,grid,st);
+            }
+            if(!st.isEmpty()){
+                mint++;
+            }
+            
+        }
+      //  System.out.println(Arrays.deepToString(grid) );
+        
+        //check if any fresh orange is left due to unreachablity 
+        for(int i = 0 ; i<row; i++ ){
+            for(int j = 0;j<col ;j++){
+                if(grid[i][j] == 1){
+                    return -1;
+                }
+            }
+        }
+        
+        return mint;
+    }
+    static void rotten(int i, int j, int[][] grid, Queue<Pair> st){
+        //check for up
+        if(i-1 >=0 && j<grid[0].length){
+            if(grid[i-1][j]==1){
+                grid[i-1][j] = 2;
+                st.add(new Pair(i-1,j));
+            }
+        }
+        //check for down
+        if(i+1 < grid.length  && j<grid[0].length) {
+            if(grid[i+1][j]==1){
+                grid[i+1][j] = 2;
+                st.add(new Pair(i+1,j));
+            }
+        }
+        //check for left 
+        if(j-1 >=0 && i<grid.length){
+            if(grid[i][j-1]==1){
+                grid[i][j-1]=2;
+                st.add(new Pair(i,j-1));
+            }
+        }
+        //check of right 
+        if(j+1 <grid[0].length && i<grid.length){
+            if(grid[i][j+1]==1){
+                grid[i][j+1] = 2;
+                st.add(new Pair(i,j+1));
+            }
+        }
+        
+    }
+}
+
+class Pair{
+    int i;
+    int j;
+    public Pair(int i, int j){
+        this.i = i;
+        this.j = j;
+    } 
+}
