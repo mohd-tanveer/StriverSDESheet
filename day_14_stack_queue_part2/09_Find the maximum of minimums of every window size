@@ -28,13 +28,42 @@ public class Solution {
     }
 }
 
-
-//still this gives tle
+//{ Driver Code Starts
 import java.util.*;
-public class Solution {
-    public static int[] maxMinWindow(int[] a, int n) {
-        // Write your code here
-        //this question is  similar to histogram 
+import java.io.*;
+
+class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =
+            new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine().trim());
+        while (t-- > 0) {
+            String[] inputline = br.readLine().trim().split(" ");
+            int n = Integer.parseInt(inputline[0]);
+            inputline = br.readLine().trim().split(" ");
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++) {
+                arr[i] = Integer.parseInt(inputline[i]);
+            }
+            Solution ob =new Solution();
+            int[] res = ob.maxOfMin(arr, n);
+            
+            for (int i = 0; i < n; i++) 
+                System.out.print (res[i] + " ");
+            System.out.println ();
+        }
+    }
+}
+// } Driver Code Ends
+
+
+
+class Solution 
+{
+    //Function to find maximum of minimums of every window size.
+    static int[] maxOfMin(int[] a, int n) 
+    {
         int [] ps=new int[n];  //leftsmal 
         int [] ns=new int[n]; ///right small 
         int [] ans=new int[n];
@@ -62,15 +91,14 @@ public class Solution {
         }
         for(int i=0;i<n;i++)
         {
-            ns[i]=ns[i]-ps[i]-1;
+            int len = ns[i]-ps[i]-2; //becasue we have inserted -1 index 
+            ans[len] = Math.max(ans[len],a[i]); //some it may happens for same length we have better ans 
         }
-        for(int i=0;i<n;i++)
-        {
-            ans[ns[i]-1]=Math.max(a[i],ans[ns[i]-1]);
-        }
+       
         for(int i=n-2;i>=0;i--)
             //if(ans[i]==Integer.MIN_VALUE)
-            ans[i]=Math.max(ans[i],ans[i+1]);
+            ans[i]=Math.max(ans[i],ans[i+1]); // choose max value btween current and next elemetn
+            //intution is for size 7 if min is 10 then for size 6 the max of min should be either 10 or more than 10 
         return ans;
     }
 }
