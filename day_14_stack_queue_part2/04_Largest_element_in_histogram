@@ -1,0 +1,41 @@
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        //approach 1 is to use brute force approach for every index find the area and store it
+        //to find the area at any index we need to find left smaller value and right smaller value for that index and take  the width just before left and just before right index 
+        //   (rightsmaller - leftsmaller) * width
+        // find all possibilites and store the maximum out of them 
+        int  n = heights.length;
+        Stack < Integer > st = new Stack < > ();
+        int leftSmall[] = new int[n];
+        int rightSmall[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            while (!st.isEmpty() && heights[st.peek()] >= heights[i]) {
+                st.pop();
+            }
+
+            if (st.isEmpty()) leftSmall[i] = 0; /// if stack is empty first index will be left smallest element
+            else leftSmall[i] = st.peek() + 1; //taking next index 
+            st.push(i);
+        }
+        
+        while (!st.isEmpty()) st.pop();
+
+        for (int i = n - 1; i >= 0; i--) {
+            while (!st.isEmpty() && heights[st.peek()] >= heights[i]) {
+                st.pop();
+            }
+
+            if (st.isEmpty()) rightSmall[i] = n - 1; // if stack is empty last index will be right smallest element 
+            else rightSmall[i] = st.peek() - 1; // taking index before the smaller lement
+
+            st.push(i);
+        }
+        
+        int maxA = 0;
+        for (int i = 0; i < n; i++) {
+            maxA = Math.max(maxA, heights[i] * (rightSmall[i] - leftSmall[i] + 1));
+        }
+        return maxA;
+
+    }
+}
