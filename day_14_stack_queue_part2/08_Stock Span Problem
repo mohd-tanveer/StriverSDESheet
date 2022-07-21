@@ -1,0 +1,36 @@
+class StockSpanner {
+    //the prices are conseccutive in a decreasing fashion so, for the value 75, it can search for next greater element on the left .
+    //so this question is boild down the next greater element in the left
+    Stack<int[]> stack ;
+    public StockSpanner() {
+        stack = new Stack<>();
+    }
+    
+    public int next(int price) {
+        //left greater element 
+        int span=1;
+        while(!stack.isEmpty() && stack.peek()[0] <= price){
+            span = span+ stack.peek()[1]; // becasue every we are storing span for current price in decreasing fashion of their values 
+            stack.pop();  //for 85, span + (75,4)(including 75) rest are popped and taken care + (80,1)
+        }
+        
+        stack.push(new int[]{price,span});
+        
+        return span;
+        
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
+
+// for 100 stack 100,1
+//for 80 stack  80,1
+// for 60  stack 60,1
+//for 70 now the 60,1 will be popped and stack will be 70,2
+// for 60 the stack will be again 60,1 becasue it is in decreasing fashion
+// for 75, now the 60,1 and 70,2 will be popped and staack will be 75,3+1  = 75,4
+// for 85 now the stack will contain 85, 1+4+1(80)
