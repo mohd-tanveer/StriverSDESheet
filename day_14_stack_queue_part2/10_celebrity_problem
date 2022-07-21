@@ -1,0 +1,32 @@
+/*
+	This is signature of helper function 'knows'.
+	You should not implement it, or speculate about its implementation.
+
+	boolean knows(int A, int B); 
+	Function 'knows(A, B)' will returns "true" if the person having
+	id 'A' know the person having id 'B' in the party, "false" otherwise.
+	Use it as Runner.knows(A, B);
+*/
+	
+public class Solution {
+	public static int findCelebrity(int n) {
+        // Write your code here.
+        //for matrix we can look for the row for which every element is zero and corresponding column for that celb should be one for each val , zero means this is celb he doesn't knows anyone hence 0 and vice versa every one is know him so 1 for others 
+        int celb = -1;
+        int cnt = 0;
+        for(int i = 0 ;i<n;i++){
+            boolean flag = true;
+            for(int j=0;j<n;j++){
+               if(i != j && Runner.knows(i, j)){
+                  flag = false;
+                  break;
+               }
+            }
+            if(flag){
+                celb = i;
+                cnt++;
+            }
+        }
+        return cnt>1?-1:celb; //if more than celb exist
+    }
+}
