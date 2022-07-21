@@ -1,3 +1,23 @@
+
+class Solution {
+    public int largestRectangleArea(int[] h) {
+        //approach 1 is to use brute force approach for every index find all the possible area and store it
+        //to find the area at any index we need to find left smaller value and right smaller value for that index and take  the width just before left and just before right index 
+        //   (rightsmaller - leftsmaller) * width
+        // find all possibilites and store the maximum out of them 
+        int  n = h.length;
+        int maxArea = 0;
+        for (int i = 0; i < n; i++) {
+            int minHeight = Integer.MAX_VALUE;
+            for (int j = i; j < n; j++) {
+                minHeight = Math.min(minHeight, h[j]);
+                maxArea = Math.max(maxArea, minHeight * (j - i + 1));
+            }
+        }
+        return maxArea;
+    }
+}
+
 class Solution {
     public int largestRectangleArea(int[] heights) {
         //approach 1 is to use brute force approach for every index find the area and store it
