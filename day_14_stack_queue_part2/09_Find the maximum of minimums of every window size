@@ -1,0 +1,32 @@
+import java.util.*;
+public class Solution {
+    public static int[] maxMinWindow(int[] nums, int n) {
+        // Write your code here
+        int[] res = new int[n];
+        for(int k = 1 ; k<=n; k++){ //for every k we need find the minimum of window size , for k =1 there will n, minimum values, for k=2 there will n-k values so out of them wee need maximum 
+            Integer[] ans = new Integer[n-k+1];
+            Deque<Integer> dq = new ArrayDeque<>();
+            int a  = 0;
+            for(int i=0; i<n; i++){//sliding window minimum concept using queue we will find all mins ans store the them array 
+               
+               //to remove the data which is out of boundayr of sliding window
+                if(!dq.isEmpty() && dq.peekFirst() == i-k){
+                    dq.removeFirst(); // equivalent ot poll() 
+                }
+                while(!dq.isEmpty() && nums[dq.peekLast()] >= nums[i]){// if any eleme at front exist which is greater than next value of window should be emitted cause we need minimum 
+                    dq.pollLast();
+                }
+                dq.addLast(i);//insert at tail what ever is the number;
+                 //start storinng once i reached to k-1 the postion basically window size 
+                if(i>=k-1){
+                    ans[a++] = nums[dq.peekFirst()]; 
+                }
+            }
+            res[k-1] = Collections.max(Arrays.asList(ans));
+        }
+        return res;
+    }
+}
+
+
+//still this gives tle
