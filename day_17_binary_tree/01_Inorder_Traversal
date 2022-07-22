@@ -33,3 +33,42 @@ class Solution {
 
 //let's do the iterative 
 
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans  = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+     
+        //iterative way , using stack 
+        //TreeNode node = root;
+        while(true){
+            if(root != null){
+                //since root is not null we need to push the element in the stack move left
+                stack.push(root);
+                root  = root.left;
+            }else{// the root is null
+                if(stack.isEmpty()) break;//if stack is over it means we have printed all the element
+                root = stack.pop();
+                ans.add(root.val);
+                //now time to move right child since left is null
+                root  = root.right;
+                
+            }
+        }
+        return ans;
+    }
+}
