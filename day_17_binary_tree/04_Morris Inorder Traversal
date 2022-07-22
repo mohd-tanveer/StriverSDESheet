@@ -1,1 +1,22 @@
 
+// Morris Traversal takes o(n) time and o(1) space, it is concept of Threaded Binary Tree
+
+        1
+       /  \
+      2     3
+     /  \
+    4    5
+           \
+            6
+            
+   4 2 4 6 1 3
+   
+   Left , Root , Right
+   case1:  left--> null print() root , and then move -->right
+   case2:  we can only go to left , if right most guy is connected to curr say root, in above example 6 should be connected
+          curr = cur->left (thread , creating thread )
+          |
+          |__ if current is connected to thread we need to remove the thread and move right, cur = cur-> right
+          
+          
+   
