@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> ans  = new ArrayList<>();
+        TreeNode curr  = root;
+        while(curr != null){
+            //case 1
+            if(curr.left == null){
+                ans.add(curr.val);//it is root 
+                curr = curr.right;
+            }else{
+                //if left subtree exist we need to make thread 
+                TreeNode prev = curr.left;
+                while(prev.right !=null && prev.right != curr){
+                    prev  = prev.right;
+                }
+                if(prev.right == null){
+                    prev.right = curr;//make a connection to its root
+                    ans.add(curr.val); //just after making a connection print root node 
+                    curr = curr.left;// and start traversing left 
+                }else{
+                    //when curr is pointnig to itslef , means we need to break the thread
+                    prev.right  = null;
+                    //becasue we came back so visiting the root
+                    //ans.add(curr.val); -> this line is for in order traversal which measn after coming back
+                    curr  = curr.right;
+                }
+            }
+        }
+        return ans;
+    }
+}
