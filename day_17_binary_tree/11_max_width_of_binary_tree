@@ -1,0 +1,39 @@
+/**
+ * Definition for binary tree
+ * class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) {
+ *      val = x;
+ *      left=null;
+ *      right=null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ArrayList<Integer> solve(TreeNode A, int B) {
+        // we will use in order traversal because like travel left and then right
+        
+        ArrayList<Integer> ans = new ArrayList<>();
+        if(A == null) return ans;
+        path(A,B,ans);
+        return ans;
+    }
+    static boolean path(TreeNode node, int B, ArrayList<Integer> ans){
+        if(node == null) return false;
+        
+        // add the current data 1,2,4
+        //and go on left and check if we find our desired data 
+        // at 4 left and right is null so we will back track and move right similar thing will happen
+        // in right side as well if any there is null in left or right and current node is not equal 
+        ans.add(node.val);
+        if(node.val == B) return true;
+        if(path(node.left,B,ans) || path(node.right,B,ans)){
+            return true;
+        }
+        //backtrack  because it is returning false
+        ans.remove(ans.size()-1);
+        return false;
+    }
+}
