@@ -67,7 +67,6 @@ public class Solution {
 
 //striver way
 
-
 /************************************************************
 
 	Following is the Binary Tree node structure:
@@ -107,6 +106,8 @@ public class Solution {
                 in.add(temp.node.data);
                 temp.level++;
                 st.push(temp);
+                
+           //becasue we want follow stack structure and push all the left elemen tfirst in stack 
                  if(temp.node.left != null){
                     st.push(new Pair(temp.node.left,1)); //first time insertion 
                 }
@@ -117,6 +118,7 @@ public class Solution {
                 temp.level++;
                 st.push(temp);
                 
+                //once left is over we want move to right of tree
                 if(temp.node.right != null){
                     st.push(new Pair(temp.node.right,1));
                 }
