@@ -1,0 +1,68 @@
+/************************************************************
+
+	Following is the Binary Tree node structure:
+
+	class BinaryTreeNode<T> {
+	    T data;
+	    BinaryTreeNode<T> left;
+	    BinaryTreeNode<T> right;
+
+	    public BinaryTreeNode(T data) {
+	        this.data = data;
+	    }
+	}
+
+************************************************************/
+import java.util.*;
+public class Solution {
+    public static List<List<Integer>> getTreeTraversal(BinaryTreeNode<Integer> root) {
+        // Write your code here.
+        List<List<Integer>>  list = new ArrayList<>();
+        List<Integer>  in = new ArrayList<>();
+        List<Integer>  pre = new ArrayList<>();
+        List<Integer>  post = new ArrayList<>();
+        inorder(root, in);
+        preorder(root, pre);
+        postorder(root, post);
+        list.add(in);
+        list.add(pre);
+        list.add(post);
+        
+        return list;
+    }
+    
+     static void inorder(BinaryTreeNode<Integer>  node, List<Integer> ans){
+        if(node==null){ // if it reaches to the end of the node 
+            return ;
+        }
+        inorder(node.left,ans);
+        ans.add(node.data);
+        inorder(node.right,ans);
+    }
+     static void preorder(BinaryTreeNode<Integer>  node, List<Integer> ans){
+        if(node==null){
+            //we have reached to the end 
+            return;
+        }
+        ans.add(node.data);
+        //goto left child
+        preorder(node.left,ans);
+        preorder(node.right,ans);
+        
+    }
+    static void postorder(BinaryTreeNode<Integer>  node, List<Integer> ans){
+        if(node==null){
+            return;
+        }
+        //go to left 
+        postorder(node.left,ans);
+        // go to right 
+        postorder(node.right,ans);
+        //print the node //go to root
+        ans.add(node.data);
+    }
+}
+
+
+
+//striver way
