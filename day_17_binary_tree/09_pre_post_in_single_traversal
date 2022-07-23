@@ -66,3 +66,86 @@ public class Solution {
 
 
 //striver way
+
+
+/************************************************************
+
+	Following is the Binary Tree node structure:
+
+	class BinaryTreeNode<T> {
+	    T data;
+	    BinaryTreeNode<T> left;
+	    BinaryTreeNode<T> right;
+
+	    public BinaryTreeNode(T data) {
+	        this.data = data;
+	    }
+	}
+
+************************************************************/
+import java.util.*;
+public class Solution {
+    public static List<List<Integer>> getTreeTraversal(BinaryTreeNode<Integer> root) {
+        // Write your code here.
+        List<List<Integer>>  list = new ArrayList<>();
+        if(root==null){
+            list.add(Arrays.asList());
+            list.add(Arrays.asList());
+            list.add(Arrays.asList());
+            return list;
+        }
+        List<Integer>  in = new ArrayList<>();
+        List<Integer>  pre = new ArrayList<>();
+        List<Integer>  post = new ArrayList<>();
+        
+        Stack<Pair> st = new Stack<>();
+        st.push(new Pair(root,1));
+        while(!st.isEmpty()){
+            Pair temp = st.pop();
+            if(temp.level==1){
+                //if it is appearing first we need to add it again 
+                in.add(temp.node.data);
+                temp.level++;
+                st.push(temp);
+                 if(temp.node.left != null){
+                    st.push(new Pair(temp.node.left,1)); //first time insertion 
+                }
+            }
+            else if(temp.level==2){
+                //if it is appearing second time we need to add it again 
+                pre.add(temp.node.data);
+                temp.level++;
+                st.push(temp);
+                
+                if(temp.node.right != null){
+                    st.push(new Pair(temp.node.right,1));
+                }
+            }
+            else{
+                //when the level is 3 for that we don't need to add it again 
+                post.add(temp.node.data);
+            }
+           
+            
+        }
+        
+       
+        list.add(pre);
+        list.add(in);
+        list.add(post);
+        
+        return list;
+    }
+    
+}
+
+class Pair{
+    BinaryTreeNode<Integer> node;
+    int level;
+    public Pair(BinaryTreeNode<Integer> node, int level){
+        this.node = node;
+        this.level = level;
+    }
+}
+
+
