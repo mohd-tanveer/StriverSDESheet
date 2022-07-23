@@ -1,0 +1,101 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Tuple{
+    TreeNode node;
+    int vertical;
+    int level;
+    public Tuple(TreeNode node, int vertical, int level){
+        this.node = node;
+        this.vertical = vertical;
+        this.level = level;
+    }
+}
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<List<Integer>> ans  = new ArrayList<>();
+        if(root == null){
+            return ans;
+        }
+        TreeMap<Integer, TreeMap<Integer,PriorityQueue<Integer>>> map = new TreeMap<>();
+            // key = vertical, value will be each level will store multiple values 
+        Queue<Tuple> q = new LinkedList<>();
+        q.add(new Tuple(root,0,0));//starting root and vertical = 0, level =0;
+        while(!q.isEmpty()){
+            Tuple t = q.poll();
+            TreeNode tempNode = t.node;
+            int vert = t.vertical;
+            int lev = t.level;
+            
+            //if this is the first time of vertical
+            if(!map.containsKey(vert)){
+                map.put(vert,new TreeMap<>());
+            }
+            // if this is first time of level for particular vertical
+            if(!map.get(vert).containsKey(lev)){
+                map.get(vert).put(lev,new PriorityQueue<>());
+            }
+            //else we know we need get and put the data
+            map.get(vert).get(lev).add(tempNode.val); //which is being sorted naturally also remmeber last is add not put because it is priority queue 
+            
+            if(tempNode.left != null){
+                //moving left means vertical axis will shift by minus one and level will add
+                q.add(new Tuple(tempNode.left,vert-1,lev+1));
+            }
+            if(tempNode.right != null){
+                //moving right means vertical axis will shift by + one and level will add
+                 q.add(new Tuple(tempNode.right,vert+1,lev+1));
+            }
+        }
+        
+        for(TreeMap<Integer,PriorityQueue<Integer>> verticalData : map.values()){
+            ans.add(new ArrayList<>());
+            //System.out.println("size bata "+ ans.size());
+            for (PriorityQueue<Integer> levelQueueData : verticalData.values()) {
+               //basically we now have one priority queue at order 0 say , simililarly we will have pq for all level
+                // while pq is not empty we can poll and add the elemebts at our location
+                while(!levelQueueData.isEmpty()) {
+                  ans.get(ans.size()-1).add(levelQueueData.poll());
+                }
+            }
+        }
+        return ans;
+        
+    }
+}
+//understanding the logic for printing the data
+
+/*
+TreeMap<Integer, TreeMap<Integer,PriorityQueue<Integer>>> tmap = new TreeMap<>();
+        tmap.put(1,new TreeMap<>());
+        tmap.put(2,new TreeMap<>());
+        tmap.get(1).put(1,new PriorityQueue<>());
+        tmap.get(2).put(2,new PriorityQueue<>());
+        tmap.get(1).get(1).add(-1); tmap.get(1).get(1).add(-2);
+        tmap.get(2).get(2).add(-10); tmap.get(2).get(2).add(20);
+
+        List<List<Integer>> ans = new ArrayList<>();
+        for(TreeMap<Integer,PriorityQueue<Integer>> aa : tmap.values()){
+            ans.add(new ArrayList<>());
+            System.out.println("size bata "+ ans.size());
+            for (PriorityQueue<Integer> pque : aa.values()) {
+                //basically we now have one priority queue at order 0 say , simililarly we will have pq for all level
+                // while pq is not empty we can poll and add the elemebts at our location
+                while(!pque.isEmpty()) {
+                  ans.get(ans.size()-1).add(pque.poll());
+                }
+            }
+        }
+        */
