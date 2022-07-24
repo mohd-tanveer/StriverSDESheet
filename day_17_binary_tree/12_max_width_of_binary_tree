@@ -1,0 +1,85 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Pair{
+    TreeNode node;
+    int num;
+    public Pair(TreeNode node, int level){
+        this.node = node;
+        this.num = level;
+    }
+}
+class Solution {
+    public int widthOfBinaryTree(TreeNode root) {
+        
+        
+        
+        // start indexing all the element and for every level find the maximum number of nodes that can exist in that level,
+        // formula of indexing is , 2i+1, 2i+2 for left and right child respectively and to find the nodes at the level, rightindex - left index + 1 
+        
+        // but what if all the elements are at left side of the tree which may result in skewed tree causing overflow /
+        // so instead of index like this we will index , left  = 2(i-1) + 1 for left child, 2(i-1) +2 for right child starting from index 0 , and this prcoess will take place from level 1,
+        
+        if(root == null) return 0;
+        int maxWidth = -1;
+        Queue<Pair> q = new LinkedList<>();
+        
+        
+        // traversing level wise so we need to queu
+        q.add(new Pair(root,0));
+       // maxWidth =1;
+        while(!q.isEmpty()){
+            int first = 0;
+            int last  = 0;
+            int size  = q.size();
+            //to store the root index and starting the next set of index with zerio
+            int min = q.peek().num; 
+            for(int i = 0 ; i<size; i++){ /// earlier size was keep updating itself 
+                Pair temp  = q.poll();
+                //for next indext to start with 0,
+                int curr  = temp.num - min;
+                
+                if(i==0){//which means we first left most data will have 0th index we cause of modified indexing rule
+                    first = curr;
+                }
+                if(i==size-1){//right most value will prsent at here
+                    last = curr;
+                }
+                 
+                if(temp.node.left != null){
+                    q.add(new Pair(temp.node.left, 2*curr + 1));
+                }
+                if(temp.node.right != null){
+                    q.add(new Pair(temp.node.right, 2*curr +2));
+                }
+               
+            }
+            maxWidth  = Math.max(maxWidth,last-first+1); 
+            
+        }
+        
+        return maxWidth;
+        
+        
+        
+    }
+}
+
+        
+        
+        
+        
+        
+       
