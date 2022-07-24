@@ -38,3 +38,35 @@ class Solution {
     }
 }
     
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ 
+ //recusive soution 
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root == null) return 0;
+        
+        //first way  is a iterative way look for above
+        //second way is using postordertraversal , find the lenght of left sub tree and the length of right sub tree
+        // and return the maximum 
+        //since root is present so length will be 1 + max(left, right)
+        
+        return  1 +  Math.max(maxDepth(root.left), maxDepth(root.right));
+    }
+}
+    
