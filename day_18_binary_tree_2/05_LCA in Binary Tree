@@ -57,3 +57,26 @@ class Solution {
 
 
 //used the cocept of root to path node
+//optimisez solution 
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        //find the path using post order traversal Root , Left , right
+        //maintain a ds and store the ancesstors
+        
+        //using sinle traversal and checking if left and right node have null or not which signifies if they are not null, it both of them lies under the root , else if left is null means right is needs to be returned 
+        
+        if(root == null || root==p || root==q){ // as soon as the my node is reached to the node we will store
+            return root;
+        }
+        TreeNode  left  = lowestCommonAncestor(root.left,p,q);
+        TreeNode right  = lowestCommonAncestor(root.right,p,q);
+        if(left == null){
+            return right;
+        }else if(right ==null){
+            return left;
+        }else{
+            return root; //which means both are not null and lies within the root node
+        }
+        
+    }
+}
