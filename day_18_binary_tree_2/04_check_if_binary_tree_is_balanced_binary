@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        //at every node we want to find the difference of right subtree-left subtreee
+        
+        if(root == null){
+            return true;
+        }
+        Boolean[] flag = new Boolean[1];
+        flag[0]  = true;
+        subtree(root,flag);
+        
+        return flag[0];
+        
+        
+    }
+    static int subtree(TreeNode node,Boolean[] flag){
+        if(node==null){
+            return 0;
+        }
+        int lenL = subtree(node.left, flag);
+        int lenR = subtree(node.right, flag);
+        System.out.println(" len L " + lenL);
+        System.out.println(" len R " + lenR);
+        if(Math.abs(lenR-lenL)>1){
+            flag[0] = false;
+        }
+        
+        return 1+Math.max(lenL,lenR);
+        
+    }
+    
+}
