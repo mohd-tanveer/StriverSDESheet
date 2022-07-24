@@ -1,3 +1,6 @@
+
+// the brute force solution is to use  like diameter for everynode calculate the hight of the tree and then compare 
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
