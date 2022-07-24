@@ -1,0 +1,59 @@
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        //find the path using post order traversal Root , Left , right
+        //maintain a ds and store the ancesstors
+        
+        TreeNode lca = null;
+        
+        List<TreeNode> ap = new ArrayList<>();
+        List<TreeNode> aq = new ArrayList<>();
+        // find all teh ancessotrs of p
+        treeToTraverse(root,p,ap);
+        
+        // find all the ancesstors of q
+        treeToTraverse(root,q,aq); //this is again travel to path from root node 
+        
+        ap.stream().forEach(i->System.out.println(i.val));
+        System.out.println(" anse");
+        aq.stream().forEach(i->System.out.println(i.val));
+        
+        //System.out.println(aq);
+        for(int i = 0;i<Math.min(ap.size(),aq.size());i++){
+            if(aq.get(i) == ap.get(i)){
+                lca = aq.get(i);//since there can be other common ancessotr which is lca
+            }
+        }
+        
+        return lca;
+    }
+    static boolean treeToTraverse(TreeNode node, TreeNode path, List<TreeNode> list ){
+        if(node==null){
+            return false;
+        }
+        list.add(node);
+        //System.out.println(" nodes for sq"+node.val);
+        if(node == path) return true;
+        //go left 
+        if(treeToTraverse(node.left,path,list) || treeToTraverse(node.right,path,list)) return true; 
+        
+        list.remove(list.size()-1);
+
+        
+        return false;
+        
+    }
+}
+
+
+//used the cocept of root to path node
