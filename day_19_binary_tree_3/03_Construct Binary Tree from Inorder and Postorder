@@ -1,0 +1,45 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        
+        Map<Integer,Integer> inMap = new HashMap<>();
+        for(int i = 0; i< inorder.length;i++){
+            inMap.put(inorder[i],i);
+        }
+        
+        TreeNode root  = buildTree(postorder,postorder.length-1,0, inorder,0,inorder.length-1,inMap);
+        return root;
+    }
+    static TreeNode buildTree(int[] postorder,int postStart, int postEnd,  int[] inorder,int inStart,int inEnd,Map<Integer,Integer> inMap){
+        
+        if(postStart < postEnd || inStart > inEnd){return null;}
+        
+        TreeNode root  = new TreeNode(postorder[postStart]);
+        int inRootIndex = inMap.get(root.val); 
+        System.out.println(inRootIndex);
+        
+        //number of elements left that will go in left of the tree is == inIndex - inStart
+        // and now we have to consider number of element for preorder of the left tree accordingly  say numsLeft + start (start we need to let's say only one element is left and start was at 4 so 4+1 = 5)
+        int numsLeft  = inRootIndex-inStart;
+        //1
+        root.left  = buildTree(postorder,postEnd+numsLeft-1,postEnd, inorder,inStart,inRootIndex-1,inMap);
+        
+        root.right  = buildTree(postorder,postStart-1,postEnd+numsLeft, inorder,inRootIndex+1,inEnd,inMap);
+        
+        return root;
+    }
+}
