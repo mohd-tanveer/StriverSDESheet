@@ -1,0 +1,68 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null || (root.left == null && root.right == null)) return true;
+        
+        //find Root, left , right 
+        Stack<Integer> rlr  = new Stack<>();
+        
+        treeTraverseLeft(root.left,rlr);
+        
+        Stack<Integer> rrl  = new Stack<>();
+
+        treeTraverseRight(root.right,rrl);
+        
+        if(rlr.size() !=rrl.size()){
+            return false;
+        }
+        
+        while(!rlr.isEmpty()){
+            if(rlr.pop() != rrl.pop()){
+                return false;
+            }
+        }
+       
+        
+        // find root, right, left
+        //and then check if the data is correct 
+        return true;
+        
+        
+    }
+    static void treeTraverseLeft(TreeNode node,Stack<Integer> stack){
+        if(node == null ){
+            stack.push(-1) ;
+            return; //in case the element is null right side should also contain null
+        }
+        
+        stack.push(node.val);
+        treeTraverseLeft(node.left,stack);
+        treeTraverseLeft(node.right,stack);
+        
+    }
+    static void treeTraverseRight(TreeNode node,Stack<Integer> stack){
+        if(node == null ){ 
+            stack.push(-1);
+            return ;}
+        
+        stack.push(node.val);
+        treeTraverseRight(node.right,stack);
+        treeTraverseRight(node.left,stack);
+        
+        
+    }
+}
