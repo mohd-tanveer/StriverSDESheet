@@ -104,3 +104,6 @@ class Solution {
     }
     
 }
+
+
+//try to use equals method instead of ==
