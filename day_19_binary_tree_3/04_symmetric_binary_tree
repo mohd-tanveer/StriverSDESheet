@@ -106,4 +106,4 @@ class Solution {
 }
 
 
-//try to use equals method instead of ==
+//try to use equals method instead of == when the data type is not primitive or say wrapper class
