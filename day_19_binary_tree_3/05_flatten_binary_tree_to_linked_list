@@ -1,18 +1,5 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
+Using recustion 
+
 class Solution {
     public TreeNode  prev = null;
     
@@ -30,3 +17,63 @@ class Solution {
     }
 
 }
+
+
+
+//using iterative using stack 
+class Solution {
+    
+    public void flatten(TreeNode root) {
+        if (root == null) return;
+        
+        Stack < TreeNode  > st=new Stack<>();
+        st.push(root); //push the root node
+        
+        while (!st.isEmpty()) {
+            TreeNode  cur = st.peek();
+            st.pop(); //take root node 
+
+        if (cur . right != null) {  //first push right because we want this to pop last 
+          st.push(cur . right); //push right because first all the left should be tagged
+        }
+        if (cur . left != null) {
+          st.push(cur . left); //push right 
+        }
+        if (!st.isEmpty()) {
+          cur . right = st.peek(); /// put current Nodes right to that data 
+        }
+        cur . left = null; //universal truth 
+      }
+
+    }
+}
+
+
+//in constant  space using moris travel threaded binary tree
+
+class Solution {
+    
+    public void flatten(TreeNode root) {
+        if (root == null) return;
+        
+        TreeNode cur = root; // cur==1
+		while (cur!=null)
+		{
+			if(cur.left!=null)
+			{
+				TreeNode pre = cur.left; // pre=2 
+				while(pre.right!=null)//go until you find a right null
+				{
+					pre = pre.right;
+				}
+				pre.right = cur.right;// in 4 of right , take 5(which is one's right means curr's right)
+				cur.right = cur.left; //now take 2 in one's right which is curr.right ==curr.left()
+				cur.left = null;//why don't make curr.left null
+			}
+			cur = cur.right; //now move to second position =curr updated 2 
+		}
+    }
+}
+
+
+
