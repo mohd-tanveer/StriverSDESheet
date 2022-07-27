@@ -1,3 +1,37 @@
+
+class Solution {
+    public Node connect(Node root) {
+        
+        if(root == null) return  null;
+
+        Queue<Node> q = new LinkedList<>();
+        q.add(root); //ad the root node 
+        while(!q.isEmpty()){
+            int size = q.size();
+            int count = 1;
+            for(int i =0; i< size ;i++){
+                Node first = q.poll();
+                System.out.println(" le " + first.val);
+                Node right  = null;
+                if(count != size){ //just to make sure we are inserting null in last of the level data
+                    right  = q.peek();
+                    System.out.println(" le" + right.val);
+
+                    count++;
+                }
+                first.next = right;
+                if(first.left != null) q.add(first.left);
+                if(first.right != null) q.add(first.right);
+            }
+        }
+        return root;
+        
+    }
+}
+
+ n* 2^log(H)
+
+
 /*
 // Definition for a Node.
 class Node {
@@ -41,3 +75,5 @@ class Solution {
         return root;
     }
 }
+
+ h* 2^log(H)  --> optimized 
