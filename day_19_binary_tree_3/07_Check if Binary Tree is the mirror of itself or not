@@ -19,3 +19,26 @@ class Solution {
         
     }
 }
+
+
+//invert_binary treee
+
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        
+        if(root == null) return null;
+        TreeNode node  = root;
+        traverse(node);
+        
+        return root;
+    }
+    static void traverse(TreeNode node){
+        if(node ==null) return;
+        
+        TreeNode temp = node.right;
+        node.right = node.left;
+        node.left  = temp;
+        traverse(node.left);
+        traverse(node.right);
+    }
+}
