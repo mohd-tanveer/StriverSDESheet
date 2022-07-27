@@ -1,0 +1,47 @@
+/*************************************************************
+
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode < Integer > {
+        int data;
+        BinaryTreeNode < Integer > left;
+        BinaryTreeNode < Integer > right;
+
+    public BinaryTreeNode(int data) {
+            this.data = data;
+        }
+    }
+
+*************************************************************/
+
+public class Solution {
+    public static void changeTree(BinaryTreeNode < Integer > root) {
+        // Write your code here.
+        //every binary tree we can convert it in to left sum property 
+        //while going from top to bottom we will check if root< left+right , then we will update the root else if root > left+right , we will propage this data to children node
+        
+        // while coming back we will update the root node to it's left+right , because we won't fall short, incase of doing same from top to bottom we would have felt short 
+        if(root == null)  return ;
+        int child = 0; //we just need left +right
+        if(root.left != null)  child  += root.left.data;
+        if(root.right != null)  child += root.right.data;
+        if(root.data <= child) root.data = child;
+        else {
+            if(root.left != null)
+                root.left.data = root.data;
+            if(root.right != null)
+                root.right.data = root.data;
+        }
+        //go left and go right
+        changeTree(root.left);
+        changeTree(root.right);
+        //so while coming back we need to update the root to the left of child and right
+        int sum = 0;
+        if(root.left != null) sum += root.left.data;
+        if(root.right != null) sum += root.right.data;
+        if(root.left !=null || root.right != null) root.data = sum;
+        //adding the left+right data to root while coming back 
+        
+        
+    }
+}
