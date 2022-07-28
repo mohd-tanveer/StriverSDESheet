@@ -15,3 +15,29 @@ class Solution {
         
     }
 }
+
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null ) return null;
+        
+        //there are three -4 cases
+        //case1:  p lies in left, q lies in right it means the root node will be LCA
+        //case 2 : both p and q lies on left or right
+        //case3 root is itself on the common(which means this is the required answer)
+        
+        int cur = root.val;
+        if(p.val < cur && q.val < cur){
+            //both lies in left of subtree
+             return lowestCommonAncestor( root.left,  p,  q);
+        }
+        if(p.val> cur && q.val > cur){
+            // both lies in right side of the tree
+            return lowestCommonAncestor( root.right,  p,  q);
+        }
+        else{
+            //both lies opposite or root is itself is LCA
+            return root;
+        }
+        
+    }
+}
