@@ -1,0 +1,24 @@
+
+public class Solution {
+
+    public  static int findCeil(TreeNode<Integer> node , int x) {
+
+        // Write your code here
+        if(node == null) return -1;
+        int ceil = -1;
+        TreeNode<Integer> root  = node;
+        
+        //using the concept of successor 
+        while(root != null){
+            if(x > root.data){
+                //if it is greater go and find the next max of x
+                root = root.right;
+            }else{
+                ceil = root.data;
+                root = root.left;
+            }
+        }
+        return ceil;
+
+    }
+}
