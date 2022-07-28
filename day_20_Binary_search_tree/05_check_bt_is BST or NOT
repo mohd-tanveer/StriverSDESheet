@@ -1,0 +1,59 @@
+//this is brute force approach 
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        if(root == null || (root.left == null && root.right == null)) return true; 
+        
+        ArrayList<Integer> list  = new ArrayList<>();
+        ArrayList<Integer> polist  = new ArrayList<>();
+        HashMap<Integer,Integer> inMap  = new HashMap<>();
+        
+
+        inorder(root,list);
+        for(int i = 0 ; i< list.size() ;i++){
+            inMap.put(list.get(i),i);
+        }
+        list.forEach(i->System.out.println(" list " +i));
+
+        //we know that root will definitely at last index 
+        postorder(root,polist);
+        polist.forEach(i->System.out.println(" polist " +i));
+        //find the index of the root node and check all the elements in in the left should be less than the root
+        
+        
+        for(int j = polist.size()-1; j>=0;j--){
+            //checking for every node if it valid bst or not
+            int rootNodeIndex   = inMap.get(polist.get(j));
+            int rootNodeValue  = list.get(rootNodeIndex);
+        
+        //System.out.println(list.get(rootNode));
+        for(int i = rootNodeIndex-1; i>=0;i--){
+            if(list.get(i) >= rootNodeValue){
+                return false;
+            }
+        }
+        for(int i = rootNodeIndex+1; i<list.size();i++){
+            if(list.get(i) <= rootNodeValue){
+                return false;
+            }
+        }
+    }
+    
+        
+        return true;
+        
+    }
+    
+    static void inorder(TreeNode root, List<Integer> list){
+        if(root==null) return;
+        inorder(root.left,list);
+        list.add(root.val);
+        inorder(root.right,list);
+    }
+    static void postorder(TreeNode root, List<Integer> polist){
+        if(root==null) return;
+        postorder(root.left,polist);
+        postorder(root.right,polist);
+        polist.add(root.val);
+        
+    }
+}
