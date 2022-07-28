@@ -1,0 +1,13 @@
+class Solution {
+    public String reverseWords(String s) {
+        String tober = "";
+        String[] str = s.strip().split(" +");
+        for(int i = 0 ; i< str.length ; i++){
+            if(i!=str.length-1)
+                tober = " "+str[i] + tober; 
+            else 
+                tober = str[i] + tober; 
+        }
+        return tober;
+    }
+}
