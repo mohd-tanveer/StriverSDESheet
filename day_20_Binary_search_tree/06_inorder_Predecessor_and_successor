@@ -1,0 +1,46 @@
+
+// This function finds predecessor and successor of key in BST.
+// It sets pre and suc as predecessor and successor respectively
+class GfG
+{
+    public static void findPreSuc(Node root, Res p, Res s, int key)
+    {
+       // add your code here
+       //case 1 key lies in left,
+       // case 2 key lies in right 
+       // case 3 key is the root node 
+       //important the first node which is greater than key node is you successeor 
+       // where as last node which is less than key is your predecessior
+       // all BST in order traversal are sorted in natrue 
+     if(root==null) return;
+     if(root.data==key){
+         //as yo found your data now extreme right of left node is your predecessor
+         if(root.left!=null){
+             
+             Node temp =root.left;
+             while(temp.right!=null){
+                 temp =temp.right;
+             }
+             p.pre=temp;
+         }
+         if(root.right!=null){
+             /// if right not null the extreme left of your right node is your successor 
+           
+            Node temp =root.right;
+            while(temp.left!=null){
+                temp=temp.left;
+            }
+            s.succ=temp;
+            return;
+         }
+     }
+     
+     if(key<root.data){
+         s.succ=root; // if the data is less immediate node could be one successor 
+         findPreSuc(root.left,p,s,key);
+     }else if(key>root.data){
+         p.pre=root;//if data is greater then this(root node) could be your predecessor 
+         findPreSuc(root.right,p,s,key);
+     }
+    }
+}
