@@ -36,11 +36,50 @@ class GfG
      }
      
      if(key<root.data){
-         s.succ=root; // if the data is less immediate node could be one successor 
+         s.succ=root; // if the data is less currnet node could be one successor 
          findPreSuc(root.left,p,s,key);
      }else if(key>root.data){
          p.pre=root;//if data is greater then this(root node) could be your predecessor 
          findPreSuc(root.right,p,s,key);
      }
+    }
+}
+
+
+//appraoch 2
+
+class GfG
+{
+    public static void findPreSuc(Node root, Res p, Res s, int key)
+    {
+       //finding sucessor and predecessor separartly 
+        
+        Node pred = root;
+        Node succe = root;
+       
+             while(pred != null){
+             
+                 if(key >= pred.data){
+                     // my key is greater 
+                     pred = pred.right;//evn if it is equal go right 
+                 }else {// the moment you go to left this is the successor 
+                     //key is defe less so we should go left and 
+                     s.succ = pred;//this could immediate right node
+                     pred  =pred.left;
+                 }
+            }
+            
+            while(succe != null){
+             
+                 if(key <= succe.data){
+                     // my key is greater 
+                     succe = succe.left;
+                 }else {// the moment it is going right my current node is predecssor
+                     //key is defe less so we should go left and 
+                     //this could immediate right node
+                    p.pre = succe;
+                    succe  =succe.right;
+                 }
+            }
     }
 }
