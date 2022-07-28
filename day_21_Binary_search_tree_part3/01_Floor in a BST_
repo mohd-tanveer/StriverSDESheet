@@ -1,0 +1,32 @@
+
+
+//used predecessor concept 
+
+public class Solution {
+
+    public static int floorInBST(TreeNode<Integer> root, int X) {
+        //    Write your code here.
+        
+        int floor = -1;
+        //using the concept of predecessor 
+        while(root != null){
+            // in case we found the value at root node , for in order we need to go right most of the value of left tree becase this is node which is just lesser or equal than this node 
+            if(root.data == X && root.left != null){
+                TreeNode<Integer> temp = root;
+                while(temp.right != null){
+                    temp = temp.right;
+                }
+                floor  = temp.data;
+                
+            }
+            if( X < root.data ){
+                root =root.left;
+            }else{
+                floor = root.data;
+               
+                root = root.right;
+            }
+        }
+        return floor;
+    }
+}
