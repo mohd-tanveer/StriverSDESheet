@@ -42,3 +42,27 @@ class Solution {
         
     }
 }
+
+
+
+class Solution {
+    public TreeNode bstFromPreorder(int[] preorder) {
+    
+        TreeNode  root = null;
+        //using previous concept of if given tree is bst or not by using range bound function 
+        // so every time we are using to left the upper bound will be the current root val where as we go right then upper bound will transfer and the right value can not be less than  that node val
+        
+        return builtTree(Integer.MAX_VALUE,preorder,new int[]{0});
+       
+    }
+
+    //we could have done with indexing but it simply dosen't work so creating refrence DS for that 
+
+    static  TreeNode builtTree(int upperBound , int[] pre , int[] index){
+        if(index[0] == pre.length || pre[index[0]]>upperBound) return null;
+        TreeNode node = new TreeNode(pre[index[0]++]);
+        node.left  = builtTree(node.val,pre,index);
+        node.right = builtTree(upperBound , pre, index );
+        return node;
+    }
+}
