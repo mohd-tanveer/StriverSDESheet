@@ -1,0 +1,66 @@
+class BSTIterator {
+
+    Stack<TreeNode> stack ;
+    //for before  reverse is true
+    // for next reverse is false 
+    boolean isReverse = false;
+
+    public BSTIterator(TreeNode root, boolean reverse) {
+        stack = new Stack<>();
+        isReverse = reverse;
+        pushAll(root);
+    }
+    
+    public int next() {
+        TreeNode tober = stack.pop();
+        if(!isReverse)
+            pushAll(tober.right);
+        else
+            pushAll(tober.left);
+        return tober.val;
+    }
+    
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+    public void pushAll(TreeNode node){
+        if(node == null) return;
+        
+        stack.push(node);
+        if(!isReverse)
+            pushAll(node.left);
+        else
+             pushAll(node.right); //if it is before push to right 
+        
+    }
+}
+
+class Solution {
+    public boolean findTarget(TreeNode root, int k) {
+        //using inorder we will have the sorted data,
+        // and then use the array to traverse get the sum inn o(n) with extra space 
+        
+        // but let's optimise and use next and before technique to solve this proble,
+        // when ever next is called which means we need the data in (increasing order)
+        // when ever before is called which means we need the data in decreasing order 
+        // from the first approach we can use two pointers to check if it is the required data
+        
+        BSTIterator nextL = new BSTIterator(root, false);
+        BSTIterator beforeR = new BSTIterator(root, true);
+        
+        int a = nextL.next();
+        int b = beforeR.next();
+        while(a<b){//because the data in sorted order
+        
+            if(a+b == k){
+                return true;
+            }else if(a+b>k) {//which means we want to decrease the value so move before 
+                b = beforeR.next();  
+            }else{//we wannt increase value move next pointer
+                a = nextL.next();
+            }
+        }
+        return false;
+        
+    }
+}
