@@ -32,3 +32,32 @@ class BSTIterator {
  */
  
  //better solution 
+ 
+ //doing in hright h , so we know extreme left of BST is the first node of the inorder traversal and then , second node would extreme left of right node otherwise it's root 
+ class BSTIterator {
+    int pointer = -1;
+    Stack<TreeNode> stack ;
+
+    public BSTIterator(TreeNode root) {
+        stack = new Stack<>();
+        pushAll(root);
+    }
+    
+    public int next() {
+        TreeNode tober = stack.pop();
+        pushAll(tober.right);
+        return tober.val;
+    }
+    
+    public boolean hasNext() {
+        return (!stack.isEmpty()) ? true:false;
+    }
+    public void pushAll(TreeNode node){
+        if(node == null) return;
+        
+        stack.push(node);
+        pushAll(node.left);
+        
+    }
+}
+
