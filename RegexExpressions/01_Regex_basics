@@ -1,0 +1,144 @@
+import java.io.IOException;
+import java.sql.SQLOutput;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+/*
+What are Regular Expressions
+what is java REGEx :
+Matcher class
+Pattern class
+REGEX character class
+Regex Quantifiers
+regex MetaCharacters
+
+ */
+
+
+public class main {
+    public static void main(String[] args) throws IOException {
+
+    /*
+        1. java regex
+         ^[a-z0-9_-]{3,15}$
+         $-> end of the line
+
+
+     */
+        Pattern pattern = Pattern.compile(".xx.");
+        Matcher matcher = pattern.matcher("AxxB");
+        System.out.println("String matches the matcher " +matcher.matches());
+        //it will return true if matcher matches the pattern
+
+        /*
+        2. REGex Character class
+        [abc]       a,b,c(A simple class)
+        [^abc]      any class except a,b or c (negation)
+        [a-zA-Z]   A through Z or a through z inclusive range
+        [a-d[m-p]]  a through d or m through p (union)
+        [a-z&&[def]] d,e,or f(intersection)
+        [a-z &&[^bc]] A through z except b or c(subtraction)
+        [a-z && [^m-p] A through z and not m through p (subtraction
+         */
+        System.out.println(Pattern.matches("[xyz]","wbcd"));//false (not x or y or z
+        System.out.println(Pattern.matches("[xyz]","x"));//true
+        System.out.println(Pattern.matches("[xyz]","xxyyyyz")); //false
+
+        /*
+        Regex Quantifiers
+            x?      x occurs once or not at all(here can be space as well)
+            x+      x occurs more than one times
+            x*      x occurs zero or more times
+            x{n}    x occurs n times only
+            x{n,}   x occurs n or more times only
+            x{y,z}  x occurs at least y times but less than z times
+
+         */
+ // ? quantifier
+        System.out.println(".................? quantifier ............");
+        System.out.println(Pattern.matches("[ayz]?","a"));//true(a or y or z comes one time
+        System.out.println(Pattern.matches("[ayz]","aaa"));//false a comes more than one time
+        System.out.println(Pattern.matches("[ayz]?","ayyyzz"));//false a , y and z comes more than one time
+        System.out.println(Pattern.matches("[ayz]?","ayz"));//true a or y or z must come one time
+
+//  + quntifier ....
+        System.out.println(".................+ quantifier ............");
+        System.out.println(Pattern.matches("[ayz]+","a"));//true(a or y or z comes one time
+        System.out.println(Pattern.matches("[ayz]+","aaa"));//true a comes more than one time
+        System.out.println(Pattern.matches("[ayz]+","ayyyzz"));//true a , y and z comes more than one time
+        System.out.println(Pattern.matches("[ayz]+","aammta"));//false Z and t are not matching pattern
+
+// * quantifier ...
+        System.out.println("...........* quantifier ................");
+        System.out.println(Pattern.matches("[ayz]*","ayyyza"));//true (a or y or z may come zero or more time
+        // )
+        /*
+            Regex Metacharacters
+            .       it can be any character
+            d       it represents any digits
+            D   represents any non digit
+            s   represents any white space
+            S   non while space character
+            w   it can be a word character
+            W   it can be a word character
+            b   represents a word boundary
+            B   it represents a non boundary
+
+         */
+        System.out.println(".........matchers  d...........");
+        System.out.println(Pattern.matches("d","abc"));//false(non digit)
+        System.out.println(Pattern.matches("d","1"));//digit can comes once
+        System.out.println(Pattern.matches("d","4443"));//false(digit but comes more than once)
+        System.out.println(Pattern.matches("d","323abc"));// false digit and char
+
+
+        // mattechses D
+        System.out.println(".............matchers  D..................");
+        System.out.println(Pattern.matches("D","abc"));//false(non digit)
+        System.out.println(Pattern.matches("D","1"));//digit can comes once
+        System.out.println(Pattern.matches("D","4443"));//false(digit but comes more than once)
+        System.out.println(Pattern.matches("D","323abc"));// false digit and char
+        System.out.println(Pattern.matches("D","m"));// true (non digit and occurs once)
+        System.out.println(Pattern.matches("D*","abc"));// true (non digit and can  occur more than once)
+
+
+    }
+}
+
+
+output 
+
+tring matches the matcher true
+false
+true
+false
+.................? quantifier ............
+true
+false
+false
+false
+.................+ quantifier ............
+true
+true
+true
+false
+...........* quantifier ................
+true
+.........matchers  d...........
+false
+false
+false
+false
+.............matchers  D..................
+false
+false
+false
+false
+false
+false
+
+Process finished with exit code 0
