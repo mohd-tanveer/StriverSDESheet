@@ -1,0 +1,28 @@
+class Solution {
+    public int longestValidParentheses(String s) {
+        
+        //the appraoch is to use stack and for every close parenthesis check the open parenthesis  and pop index value,
+        //find the len by subtracting the index , if the stack is empty just push the latest invalid string index
+        Stack<Integer> stack  = new Stack<>();
+        int counter  = 0;
+        int max=0;
+        stack.push(-1);//initially 
+        for(int i =0 ; i<s.length();i++){
+            if(s.charAt(i) == ')'){
+                stack.pop();
+                if(stack.isEmpty()){
+                    stack.push(i);
+                }else{
+                    counter = i-stack.peek();
+                    max  = Math.max(counter,max);
+                }
+                 
+            }else{
+                
+                stack.push(i);
+            }
+        }
+        return max;
+    }
+}
+
