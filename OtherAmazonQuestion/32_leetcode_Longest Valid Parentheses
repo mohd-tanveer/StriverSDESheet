@@ -26,3 +26,48 @@ class Solution {
     }
 }
 
+
+
+class Solution {
+    public int longestValidParentheses(String s) {
+        
+        //the appraoch is to use stack and for every close parenthesis check the open parenthesis  and pop index value,
+        //find the len by subtracting the index , if the stack is empty just push the latest invalid string index
+        
+        //second appraoch is to count the open and close parenthesis , for it to be a valid string at any index 
+        // the number open and close parenthesis should be same  . else while going forward we find close parenthesis is more than open parenthesis , we can assign out pointer 0, because at this string is not valid,
+        
+        //same scenrio is while traveling from backward to forward , if we see open is more than close means at this index the valid perenthesis does not lies
+        
+        int max = 0;
+        int open=0,close = 0;
+        for(int i =0;i<s.length();i++){
+            if(s.charAt(i)=='(')
+                open++;
+            else
+                close++;
+            if(open == close){
+                //it says i am valid atleast till this point 
+                max = Math.max(max,open+close);
+            }else if(close>open){
+                //we need to reset our pointer 
+                open=close =0;
+            }
+        }
+        open = close =0;
+        for(int i =s.length()-1;i>=0;i--){
+            if(s.charAt(i)=='(')
+                open++;
+            else
+                close++;
+            if(open == close){
+                //it says i am valid atleast till this point 
+                max = Math.max(max,open+close);
+            }else if(open>close){
+                //we need to reset our pointer 
+                open=close =0;
+            }
+        }
+        return max;
+    }
+}
