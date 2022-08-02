@@ -15,3 +15,28 @@ class Solution {
 }
 
 // the above solution is brute force solution 
+//By maintaining min and max
+class Solution {
+    public int maxProduct(int[] nums) {
+        int currMax =1;
+        int currMin =1;
+        int res=Integer.MIN_VALUE;
+        
+        for(int i : nums){
+            if(i == 0){
+                //if we say o we will reset of values to 1 again
+                currMax=currMin = 1;
+                res = Math.max(res,i);
+                continue;
+            }
+            int tempCurrMax = currMax*i; //in later stages it is being changes
+            int tempCurrMin = currMin*i;
+            currMax = Math.max(Math.max(tempCurrMax,tempCurrMin),i);//or the number itself is max
+            currMin = Math.min(Math.min(tempCurrMin,tempCurrMax),i);
+            res = Math.max(currMax,res);
+            
+        }
+        return res;
+        
+    }
+}
