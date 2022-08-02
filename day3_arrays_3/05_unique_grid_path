@@ -36,3 +36,27 @@ class Solution {
             }
         }
 }
+
+
+
+class Solution {
+    public int uniquePaths(int m, int n) {
+        
+        //observation says for m=3 and n=2 there are total 3 possible paths which includes 2R and 1D which means m-1+n-1=m+n-2  => total direction involves it turn out be p*C question to find pns check pascal triangle 10c3=> 10*9*8/3*2*1
+        int N = m+n-2;
+        int r=n-1;
+        double result = 1;
+        for(int i=1;i<=r;i++){
+            
+        result = result*(N-r+i)/i;
+        }
+        return (int)result;
+        
+    }
+}
+
+From start to reach the end we need a certain number of rightward directions and a certain number of downward directions.
+So we can figure out we need n-1 no. of rightward direction and m-1 no. of downward direction to reach the endpoint.
+
+Since we need an m+n-2 number of steps to reach the end among those steps if we choose n-1 rightward direction 
+or m-1 downward direction and calculate the combinations ( ie: m+n-2Cn-1 or m+n-2Cm-1) we’ll get the total number of paths.
