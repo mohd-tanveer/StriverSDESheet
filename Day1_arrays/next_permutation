@@ -1,0 +1,26 @@
+class Solution {
+    public void nextPermutation(int[] A) {
+        
+        //checking the number in lexographic order , so from one start to some point it will increasing and from peak to last it will decreasing , so we are going to finde break even 
+        if(A == null || A.length <= 1) return;// return in case null or size =1;
+        int i = A.length - 2;//because we want compare with next element 
+        while(i >= 0 && A[i] >= A[i + 1]) i--;  // found my first decreasing value 
+        if(i >= 0) {                           
+            int j = A.length - 1;              
+            while(A[j] <= A[i]) j--;      // try finding the first increasing value , ex 1,2,3,5,4,2,1,  here thought we have 5 after but we can't take that , hence start from en dagain and check the first value whihc is equal or greater than last peak element here 3
+            swap(A, i, j);                     
+        }
+        reverse(A, i + 1, A.length - 1);      
+}
+
+    public void swap(int[] A, int i, int j) {
+        int tmp = A[i];
+        A[i] = A[j];
+        A[j] = tmp;
+}
+
+    public void reverse(int[] A, int i, int j) {
+        while(i < j) swap(A, i++, j--);
+    }
+}
+//watch techdose for explanation
