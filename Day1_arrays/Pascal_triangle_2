@@ -15,3 +15,8 @@ class Solution {
         return  toBeRetrun;
     }
 }
+
+https://leetcode.com/submissions/detail/632838957//
+
+intution behind this solution is to use binomial theorem , ncr = nC0 , nC1,nC2,nC3,nC4,nC5......nCn...
+whihc is built with binomial function 
