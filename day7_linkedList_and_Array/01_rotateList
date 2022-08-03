@@ -53,5 +53,40 @@ class Solution {
 }
 
 //solved using above first method now let's solve using circular linked list;
-
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        //let's try circular linked list 
+        ListNode curr = head;
+        ListNode pre = curr;
+        
+        int len=1;//since we are operating on next 
+           if(head==null ||head.next ==null || k==0){
+                return head;
+            }
+        while(curr.next!=null){
+            curr=curr.next;
+            len +=1;
+        }
+        curr.next=head;//make it circular 
+        
+       //we need to traverse only len-k position 
+        k = len-k%len;
+        while(k-->0){
+            curr=curr.next;
+        }
+        head=curr.next;//in case of k= 0 it points to same address 
+        curr.next =null;
+        return head;
+    }
+}
 
