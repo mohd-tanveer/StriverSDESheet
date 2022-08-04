@@ -14,3 +14,25 @@ class Solution
         inorder(root.right,list);
     }
 }
+
+
+//using reverse post order traversal
+
+class Solution
+{       private static int number = 0;
+        private static int count = 0;
+    // return the Kth largest element in the given BST rooted at 'root'
+    public int kthLargest(Node root,int k)
+    {
+        count  = k;
+        postorder(root);
+        return number;
+    }
+    static void postorder(Node root){
+        if(root == null ) return ;
+        postorder(root.right);
+        count--;
+        if(count == 0) number = root.data;
+        postorder(root.left);
+    }
+}
