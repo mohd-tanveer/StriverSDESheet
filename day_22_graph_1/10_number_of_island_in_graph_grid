@@ -1,0 +1,39 @@
+class Solution {
+    public int numIslands(char[][] grid) {
+        //if they are connected which means one island 
+        //check if the value is 1 increament the counter and do the dfs and mark all the connected node as visited as part of one island 
+        int count  = 0;
+        int row= grid.length;
+        int col = grid[0].length;
+        for(int i=0;i<row; i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]=='1'){
+                    //increament the island and go and mark other land as part of this island 
+                    markDfsWay(grid,i,j,row,col);
+                    count++;
+                }
+            }
+        }
+        return count;
+        
+    }
+    static void markDfsWay(char[][] grid, int i,int j, int row, int col){
+        if(i>= row || j>=col || i < 0 || j<0 || grid[i][j]!='1')
+            return; //base condition
+        //else we know that we need to mark it is visited and go in other 4 directions
+        
+        grid[i][j] = '2';
+        
+        //left means col decrement 
+        markDfsWay(grid,i,j-1,row,col);
+        //right mens col increment
+        markDfsWay(grid,i,j+1,row,col);
+        //up means row is decrement 
+        markDfsWay(grid,i-1,j,row,col);
+        //down means row is increament 
+        markDfsWay(grid,i+1,j,row,col);
+        
+        
+    }
+}
+https://leetcode.com/problems/number-of-islands/submissions/
