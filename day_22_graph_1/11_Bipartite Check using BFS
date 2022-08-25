@@ -1,0 +1,41 @@
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        //let's solve it using bfs 
+        //total nodes 
+        //question explanation node 0 has 1,2,3 as adjacent , node 1 has 0,2 as a adjacent etc
+        
+        int n = graph.length;
+        int[] colorNodes  = new int[n];
+        Arrays.fill(colorNodes , -1);
+        //since not all nodes connected 
+        for(int i =0 ;i<n ;i++){
+            if(colorNodes[i]==-1){
+                //it is not colored 
+                if(!bfscheckIfBiPartite(i,colorNodes,graph)){
+                    return false;
+                }
+            }
+        }
+        return true;
+        
+        
+    }
+    static boolean bfscheckIfBiPartite(int node, int[] color,int[][] graph){
+        color[node] = 1;//color with 1 say red 0 as blue
+        Queue<Integer> q = new LinkedList<>();
+        q.add(node);
+        while(!q.isEmpty()){
+            Integer data = q.poll();
+            for(Integer it: graph[data]){
+                if(color[it]==-1){
+                    q.add(it);
+                    color[it] = 1-color[data];//since it is adacent
+                }//else if it is alrady colored
+                else if(color[it]==color[data]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
