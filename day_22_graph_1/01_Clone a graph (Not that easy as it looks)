@@ -1,0 +1,57 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> neighbors;
+    public Node() {
+        val = 0;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val) {
+        val = _val;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val, ArrayList<Node> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+}
+*/
+
+class Solution {
+    public Node cloneGraph(Node node) {
+        Queue<Node> q = new LinkedList<>();
+        if(node==null) return null;
+        Node[] vis = new Node[1000];
+        Arrays.fill(vis,null);
+        Node copy = new Node(node.val);
+        vis[node.val] = copy;
+       //we should use dfs because we need to traverse entire graph , neverthless we can use bfs as well
+        for(Node curr : node.neighbors){
+            if(vis[curr.val]==null){
+                //it is not visted we are going to visit using dfs 
+                //before dfs call let's create copy and add it to adjacent 
+                Node newNode  = new Node(curr.val);
+                copy.neighbors.add(newNode);
+                dfs(curr,newNode,vis);
+            }else{
+                //even if it is visted but it is also a neighbour we need to add
+                //remember we need to add the copy which is already stored in visted array
+                copy.neighbors.add(vis[curr.val]);
+            }
+        }
+        return copy;
+    }
+    static void dfs(Node orignalNode, Node currentCopyNode, Node[] vis){
+        vis[currentCopyNode.val] = currentCopyNode;
+        for(Node curr : orignalNode.neighbors){
+            if(vis[curr.val]==null){
+                Node newNode  = new Node(curr.val);
+                currentCopyNode.neighbors.add(newNode);
+                dfs(curr,newNode,vis);
+            }else{
+                currentCopyNode.neighbors.add(vis[curr.val]);
+            }
+        }
+    }
+}
