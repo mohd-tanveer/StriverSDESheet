@@ -41,3 +41,71 @@ class Solution {
         
     }
 }
+
+
+//more better 
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        /*
+        this is pattern question of lcs
+        so at first we have an option to choose 10 or not to choose 10 
+        and at second index we will have to compare it with previous index data whihc is part of this subsequence if it is allowed then we can take it
+                prev=-1,ind=0
+                    /   \
+            prev=0,ind=1  prev=1,ind=1
+                |                 /\
+            prev =0,ind=2
+                
+        */
+        //because -1 is not allowed in array indexing we will do the co-ordinate shift
+        int[][] dp = new int[nums.length][nums.length+1];
+        for(int[] row:dp){
+            Arrays.fill(row,-1);
+        }
+       return solveLis(nums,0,-1,dp);
+        
+    }
+    static int solveLis(int[] nums,int ind,int prev,int[][] dp){
+        //base condition 
+        if(ind == nums.length) return 0;
+        
+        if(dp[ind][prev+1] != -1){
+            return dp[ind][prev+1];
+        }
+        
+        //not take it means length will not increase
+        //not take scenario 
+        int len;
+        if(ind< nums.length-1){//to check if ind+1 is not the last index 
+            if(dp[ind+1][prev+1] != -1)
+                len = dp[ind+1][prev+1];
+            else{
+                len  = solveLis(nums,ind+1,prev,dp); 
+                dp[ind+1][prev+1] = len;
+            }
+        }else
+            len  = solveLis(nums,ind+1,prev,dp); 
+        
+        
+        //take it (if it is first element and we want to take it)
+        if(prev == -1 || nums[ind] > nums[prev]){
+            int take;
+            if(ind < nums.length-1){
+                if(dp[ind+1][ind+1] != -1)
+                    take=  dp[ind+1][ind+1];
+                else{
+                    take  =  1+solveLis(nums,ind+1,ind,dp);
+                    dp[ind+1][ind+1] = take;
+                    }
+            }else{
+                take  =  1+solveLis(nums,ind+1,ind,dp);
+            }
+           len = Math.max(len,take);
+        }
+        return dp[ind][prev+1]=len;
+        
+    }
+}
+
+
+//let's go for tabular 
