@@ -1,0 +1,42 @@
+class Solution {
+    public int findMaxForm(String[] strs, int m, int n) {
+        //
+        int[][][] dp = new int[strs.length][m+1][n+1];
+        int res= solve(strs,m,n,0,dp);
+        return res;
+    }
+    static int solve(String[] str, int z, int o,int ind,int[][][] dp){
+        //base condition 
+        if(ind == str.length){return 0;}
+        
+        if(dp[ind][z][o] != 0) return dp[ind][z][o];
+        //take it condition
+        int nuOfZeroes = 0;
+        int nuOfOnes = 0;
+        for(int i=0;i<str[ind].length();i++){
+            if(str[ind].charAt(i)=='0'){
+                nuOfZeroes++;
+            }else{
+                nuOfOnes++;
+            }
+        }
+        //can we take it 
+        /*
+        int takeIt = 0;
+        if(nuOfZeroes <= z  && nuOfOnes <= o){
+            takeIt =  1 + solve(str,z-nuOfZeroes,o-nuOfOnes,ind+1);
+        }
+        
+        //not to take it 
+        int notTakeIt = solve(str,z,o,ind+1);
+        
+        return Math.max(takeIt,notTakeIt);
+       */
+        if(nuOfZeroes <= z  && nuOfOnes <= o){
+            return dp[ind][z][o] = Math.max(1 + solve(str,z-nuOfZeroes,o-nuOfOnes,ind+1,dp),solve(str,z,o,ind+1,dp));
+        }
+        
+        return dp[ind][z][o]=solve(str,z,o,ind+1,dp);
+        
+    }
+}
