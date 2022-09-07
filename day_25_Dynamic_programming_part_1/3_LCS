@@ -1,0 +1,78 @@
+//it gives TLE
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        // check string and if the character is common add one in the result else use take and not take option
+        
+        int len1 = text1.length();
+        int len2 = text2.length();
+        int result  = solve(text1,text2,len1-1,len2-1);
+        return result;
+    }
+    static int solve(String text1, String text2, int i,int j){
+        //i for first string and j for second string 
+        //base condition 
+        if(i<0 || j<0) return 0;
+        
+        //check equal condition
+        if(text1.charAt(i)==text2.charAt(j))
+            return 1 + solve(text1,text2,i-1,j-1);
+        
+        return Math.max(solve(text1,text2,i,j-1),solve(text1,text2,i-1,j));
+        
+        
+    }
+}
+
+
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        // check string and if the character is common add one in the result else use take and not take option
+        
+        int len1 = text1.length();
+        int len2 = text2.length();
+        int dp[][] = new int[len1][len2];
+        int result  = solve(text1,text2,len1-1,len2-1,dp);
+        return result;
+    }
+    static int solve(String text1, String text2, int i,int j,int[][] dp){
+        //i for first string and j for second string 
+        //base condition 
+        if(i<0 || j<0) return 0;
+        
+        //check equal condition
+        //check if we have already solved the proble 
+        if(dp[i][j] !=0) return dp[i][j];
+        
+        //if aove statments hold it will not go to next location 
+        if(text1.charAt(i)==text2.charAt(j)){
+            return  dp[i][j]= 1 + solve(text1,text2,i-1,j-1,dp);
+        }
+        //take string1 and leave string2
+        int left = 0; 
+        if(j-1>=0){
+            if(dp[i][j-1] !=0) left = dp[i][j-1];
+            else{
+                left = solve(text1,text2,i,j-1,dp);
+                dp[i][j-1] = left;
+            }
+        }else{
+            left = solve(text1,text2,i,j-1,dp);
+        }
+        //take string2 and leave string1
+        int right =0;
+        if(i-1>=0){
+           if(dp[i-1][j] !=0) right = dp[i-1][j];
+            else{
+                right = solve(text1,text2,i-1,j,dp);
+                dp[i-1][j] = right;
+            }
+        }else{
+           right = solve(text1,text2,i-1,j,dp); 
+        }
+        
+        
+        return dp[i][j]=Math.max(left,right);
+        
+        
+    }
+}
