@@ -1,0 +1,32 @@
+
+//explanation 
+https://www.youtube.com/watch?v=1V8gRXh1qbU&ab_channel=Pepcoding
+
+class Solution {
+    public boolean canCross(int[] stones) {
+        // we will store all the possible jump from particular stonesPosition
+        HashMap<Integer, HashSet<Integer>> map = new HashMap<>();
+        for (int i : stones) {
+            map.put(i, new HashSet<Integer>());
+        }
+        map.get(stones[0]).add(1);//from first position only one jump is allowed
+        for (int i = 0; i < stones.length; i++) {
+            HashSet<Integer> possibleJumps = map.get(stones[i]);
+            for (Integer jump : possibleJumps) {
+                //from this jump where i can reach 
+                int nextPos = stones[i] + jump;
+                // the moment we see that we have reached ot the final
+                if (nextPos == stones[stones.length - 1]) return true;
+
+                if (map.containsKey(nextPos)) {
+                    if (jump - 1 > 0)
+                        map.get(nextPos).add(jump - 1);
+                    map.get(nextPos).add(jump);
+                    map.get(nextPos).add(jump + 1);
+                }
+
+            }
+        }
+        return false;
+    }
+}
