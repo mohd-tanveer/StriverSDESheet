@@ -1,0 +1,52 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+class GfG
+{
+    public static void main(String args[])
+        {
+            Scanner sc = new Scanner(System.in);
+            int t = sc.nextInt();
+            while(t-->0)
+                {
+                    int n = sc.nextInt();
+                    int Arr[] = new int[n];
+                    for(int i = 0;i<n;i++)
+                        Arr[i] = sc.nextInt();
+                    Solution ob = new Solution();
+                    System.out.println(ob.maxSumIS(Arr,n));
+                }
+        }
+}    
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution
+{
+	public int maxSumIS(int arr[], int n)  
+	{  
+	    //code here.
+	    //let's write a recursion code first
+	    //we will store last previous data 
+	    int dp[][]  = new int[n][n+1];
+	    return solve(arr,n,0,-1,dp);
+	}  
+	static int solve(int[] arr,int n, int ind,int prev,int[][] dp){
+	    //base case 
+	    if(ind == n) return 0;
+	    //take the data option
+	    
+	    if(dp[ind][prev+1] != 0) return dp[ind][prev+1];
+	    int sum=0;
+	    if(prev == -1 || arr[ind]>arr[prev]){
+	        sum = Math.max(sum,arr[ind]+solve(arr,n,ind+1,ind,dp));
+	    }
+	    //not take take scenario
+	    return dp[ind][prev+1]=Math.max(sum,solve(arr,n,ind+1,prev,dp));
+	    
+	}
+}
