@@ -56,7 +56,7 @@ class Solution{
 
 
 
-
+//bottom up 
 
 class Solution{
     static int matrixMultiplication(int N, int arr[])
