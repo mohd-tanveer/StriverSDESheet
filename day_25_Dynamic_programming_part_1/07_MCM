@@ -53,3 +53,37 @@ class Solution{
         return dp[i][j] = min;
     }
 }
+
+
+
+
+
+class Solution{
+    static int matrixMultiplication(int N, int arr[])
+    {
+        // code here
+        int[][] dp = new int[N][N];
+        for(int[] row:dp){
+            Arrays.fill(row,0);
+        }
+        // rule1 : write based condition
+        for(int i = N-1;i>=1;i--){
+            for(int j = i+1; j<N ;j++){
+                int min = Integer.MAX_VALUE;
+                for(int k = i;k<j;k++){
+                    int mul = arr[i-1]*arr[k]*arr[j] + dp[i][k] + dp[k+1][j];
+                    if(mul<min){
+                        min =mul;
+                    }
+            }
+             dp[i][j] = min;
+            
+            }
+           
+        }
+        // write donw changing parameters 
+        //copy the recurrence 
+        return dp[1][N-1];
+        
+    }
+}
