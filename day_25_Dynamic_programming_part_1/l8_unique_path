@@ -90,3 +90,21 @@ public class Solution {
 	}
    
 }
+
+
+//already done in arryas                  https://leetcode.com/problems/unique-paths/
+class Solution {
+    public int uniquePaths(int m, int n) {
+        
+        //observation says for m=3 and n=2 there are total 3 possible paths which includes 2R and 1D which means m-1+n-1=m+n-2  => total direction involves it turn out be p*C question to find pns check pascal triangle 10c3=> 10*9*8/3*2*1
+        int N = m+n-2;
+        int r=n-1;
+        double result = 1;
+        for(int i=1;i<=r;i++){
+            
+        result = result*(N-r+i)/i;
+        }
+        return (int)result;
+        
+    }
+}
