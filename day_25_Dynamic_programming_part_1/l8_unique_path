@@ -1,0 +1,24 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+	public static int uniquePaths(int m, int n) {
+		// Write your code here.
+        //we will start moving from last point which means we can now move //
+        //up  i-1 or //left j-1
+        int dp[][] = new int[m][n];
+        for(int[] row:dp){
+            Arrays.fill(row,-1);
+        }
+        return solveGrid(m-1,n-1,dp);
+	}
+    static int solveGrid(int i, int j,int[][] dp){
+        //base case when i and j both reach to destination which is starting point is 0,0 we count as one 
+        if(i==0 && j==0)  return 1;
+        //boundary cases
+        if(i<0 || j<0) return 0;
+        if(dp[i][j] != -1) return dp[i][j];
+        //becasue we are moving upward and leftward
+        // return up + left
+        return dp[i][j]= (solveGrid(i-1, j,dp) + solveGrid(i, j-1,dp));
+    }
+}
