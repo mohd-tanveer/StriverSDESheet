@@ -69,3 +69,42 @@ public class Solution {
     
 
 }
+
+
+
+
+///space optimisation
+
+import java.util.*;
+public class Solution {
+    public static int ninjaTraining(int n, int points[][]) {
+
+        // Write your code here..
+        //for day0
+        //we can do space optimsation as well since we need only previous data so have an arry o fsize 4
+        int[] prev = new int[4];
+        prev[0] = Math.max(points[0][1],points[0][2]);
+        prev[1] = Math.max(points[0][0],points[0][2]);
+        prev[2] = Math.max(points[0][0],points[0][1]);
+        prev[3] = Math.max(points[0][0],Math.max(points[0][1],points[0][2]));
+        
+        //for day1 onwards
+        for(int day=1;day<n;day++){
+            int temp[] = new int[4];
+            for(int last=0;last<4;last++){
+                
+                for(int i = 0; i < 3; i++){//here I is task
+                    if(i != last){
+                        temp[last] = Math.max(temp[last],points[day][i]+prev[i]);
+                    }
+                }
+               
+            }
+            prev=temp; 
+        }
+        //return solve(points,n-1,3,dp);
+        return prev[3];
+    }
+    
+
+}
