@@ -77,4 +77,47 @@ class Solution {
     }
 }
                             
+                            
+                            
+                            
+//space optimisation 
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        
+        int prev[]= new int[amount+1];
+        int curr[]= new int[amount+1];
+        //base condition 
+        for(int target = 0 ; target<=amount;target++){
+            
+            if(target % coins[0]==0)
+                curr[target]  = target/coins[0];
+            else
+                curr[target]=(int)Math.pow(10,9);
+        }
+        
+        for(int i = 0 ; i < coins.length;i++){
+            
+            for(int j=0;j <= amount;j++){
+                
+                int take = Integer.MAX_VALUE;
+                
+                if(j-coins[i] >= 0){
+                    take = Math.min(take,1+curr[j-coins[i]]);
+                }
+                                                 
+
+                int notTake = prev[j];
+
+                prev[j] = Math.min(take,notTake);
+
+            }
+            prev=curr;
+        }
+        int ans = prev[amount];
+        
+        
+        return ans >=(int)Math.pow(10,9)?-1:ans;
+    }
+}
+                            
     
