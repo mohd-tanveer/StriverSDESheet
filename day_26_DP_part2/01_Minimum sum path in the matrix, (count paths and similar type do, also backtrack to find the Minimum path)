@@ -1,1 +1,26 @@
 
+class Solution {
+    public int minPathSum(int[][] grid) {
+        
+        int[][] dp = new int[grid.length][grid[0].length];
+        for(int[] row:dp) Arrays.fill(row,-1);
+        return solve(grid,grid.length-1,grid[0].length-1,dp);
+    }
+    
+    static int solve(int[][] grid, int i , int j, int[][] dp){
+        //base condition // we will move bottom right to top left
+        if(i == 0 && j == 0) return grid[i][j];
+        //boundary case
+        if(i<0 || j<0 ) return 20000; //big number
+        
+        if(dp[i][j] != -1) return dp[i][j];
+        
+        //move up
+        int up = grid[i][j]+solve(grid,i-1,j,dp);
+        int left = grid[i][j]+solve(grid,i,j-1,dp);
+        
+        return dp[i][j] = Math.min(up,left);
+        
+    }
+}
+
