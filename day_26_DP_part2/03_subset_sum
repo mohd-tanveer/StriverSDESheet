@@ -44,3 +44,50 @@ class Solution {
 }
 
 
+//space optimisation 
+class Solution {
+    public boolean canPartition(int[] nums) {
+        /*
+        s= s1+s2
+        s1=s2=s/2
+        since we are dividing entire array into two subset and they have to equal 
+        so we need to find subset target s/2
+        and if s is odd number it means we can't divide 
+        */
+        int totalSum = 0;
+        for(int a : nums){
+            totalSum += a;
+        }
+        if(totalSum %2 !=0)
+            return false;
+        
+        boolean dp[]= new boolean[totalSum+1];
+        
+        //base condition says for tsum =0 we need to store true
+     
+        dp[0] = true;
+    
+        //second base condition says on 0th index only at nums[0] is true 
+        dp[nums[0]]  = true;
+     
+        for(int ind=1;ind<nums.length;ind++){
+            boolean curr[]= new boolean[totalSum+1];
+            for(int tar=1;tar<totalSum/2+1;tar++){
+                boolean take = false;
+                
+                if(nums[ind] <= tar)
+                    take  = dp[tar-nums[ind]];
+
+                boolean notTake = dp[tar];
+
+
+
+                curr[tar] = take || notTake ;
+            }
+            dp=curr;
+        }
+            
+        return dp[totalSum/2];
+    }
+    
+}
