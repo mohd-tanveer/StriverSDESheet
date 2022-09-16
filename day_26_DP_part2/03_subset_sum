@@ -1,0 +1,46 @@
+class Solution {
+    public boolean canPartition(int[] nums) {
+        /*
+        s= s1+s2
+        s1=s2=s/2
+        since we are dividing entire array into two subset and they have to equal 
+        so we need to find subset target s/2
+        and if s is odd number it means we can't divide 
+        */
+        int totalSum = 0;
+        for(int a : nums){
+            totalSum += a;
+        }
+        if(totalSum %2 !=0)
+            return false;
+        
+        boolean dp[][] = new boolean[nums.length][totalSum+1];
+        
+        //base condition says for tsum =0 we need to store true
+        for(int i=0;i<nums.length;i++){
+            dp[i][0] = true;
+        }
+        //second base condition says on 0th index only at nums[0] is true 
+        dp[0][nums[0]]  = true;
+     
+        for(int ind=1;ind<nums.length;ind++){
+            for(int tar=1;tar<totalSum/2+1;tar++){
+                boolean take = false;
+                
+                if(nums[ind] <= tar)
+                    take  = dp[ind-1][tar-nums[ind]];
+
+                boolean notTake = dp[ind-1][tar];
+
+
+
+                dp[ind][tar] = take || notTake ;
+            }
+        }
+            
+        return dp[nums.length-1][totalSum/2];
+    }
+    
+}
+
+
