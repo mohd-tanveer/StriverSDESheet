@@ -1,0 +1,69 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+
+	public static int palindromePartitioning(String str) {
+	     // code here
+        int[] dp = new int[str.length()];
+        Arrays.fill(dp,-1);
+        return solve(str,0,str.length(),dp)-1;
+    }
+    static int solve(String str, int ind,int n,int[] dp){
+        if(ind==n){
+            return 0;
+        }
+        if(dp[ind] != -1) return dp[ind];
+        int minCost = Integer.MAX_VALUE;
+        for(int i=ind;i<n;i++){
+            if(isPalindrome(str,ind,i)){
+                int cost = 1+solve(str,i+1,n,dp);
+                minCost = Math.min(minCost,cost); 
+            }
+        }
+        return dp[ind] = minCost;
+    }
+    static boolean isPalindrome(String s, int start, int end){
+        while(start<=end){
+            if(s.charAt(start++)!=s.charAt(end--)){
+                return false;
+            }
+        }
+        return true;
+
+    }
+}
+
+
+//tabulation 
+class Solution{
+    static int palindromicPartition(String str)
+    {
+        // code here
+        
+        int n = str.length();
+        int[] dp = new int[n+1];
+        //base case
+        dp[n] = 0;
+        for(int ind = n-1 ;ind>=0;ind--){
+            int minCost = Integer.MAX_VALUE;
+            for(int i=ind;i<n;i++){
+                if(isPalindrome(str,ind,i)){
+                    int cost = 1+dp[i+1];
+                    minCost = Math.min(minCost,cost); 
+                }
+            }
+            dp[ind] = minCost;
+        }
+        return dp[0]-1;
+    }
+   
+    static boolean isPalindrome(String s, int start, int end){
+        while(start<=end){
+            if(s.charAt(start++)!=s.charAt(end--)){
+                return false;
+            }
+        }
+        return true;
+
+    }
+}
