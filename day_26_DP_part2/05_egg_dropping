@@ -69,3 +69,54 @@ class Solution
 	}
 	
 }
+
+
+//tabulation 
+
+
+
+class Solution 
+{
+    //Function to find minimum number of attempts needed in 
+    //order to find the critical floor.
+    static int eggDrop(int e, int f) 
+	{
+	    // Your code here
+	    //n = identical eggs
+	    //k i number of floor
+	    //if number of eggs 0 then we can not tell number of steps
+	   //base condition 
+	   int[][] dp = new int[e+1][f+1];
+	   
+	   
+	   for(int egg = 1;egg<=e;egg++){
+	       for(int floor = 1;floor<=f;floor++){
+	           
+	           if(egg==1){
+	               dp[1][floor] = floor ;
+	           }else if(floor==1){
+	               dp[egg][floor] = 1;
+	           }else{
+	           
+    	            int min = Integer.MAX_VALUE;
+            	    for(int k = 1; k<=floor;k++){
+            	        int eggNotBreak = dp[egg][floor-k];
+            	        int eggBreak =    dp[egg-1][k-1];
+            	        //adding one for each floor it's attempt needs to be added
+            	        int tempMin =  1 + Math.max(eggNotBreak,eggBreak);
+            	        
+            	        min  = Math.min(min,tempMin);
+            	    }
+        	    
+        	   dp[egg][floor] = min;
+	           }
+	           
+	       }
+	   }
+	   
+	   return dp[e][f];
+	    
+	}
+
+	
+}
