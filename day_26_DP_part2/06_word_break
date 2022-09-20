@@ -54,3 +54,28 @@ class Sol
         return false;
     }
 }
+public static int wordBreak(String A, ArrayList<String> B )
+    {
+        //code here
+        HashSet<String> set = new HashSet<>(B);
+        boolean[] dp = new boolean[A.length()];
+        //Arrays.fill(dp,-1);
+        return isWordbreakPossible(A,set,0,A.length(),dp)?1:0;
+    }
+    
+    static boolean isWordbreakPossible(String A, HashSet<String> set, int ind, int n,boolean[] dp){
+        if(ind==n) return true;//we have reached the end 
+        
+        if(dp[ind] == true) return dp[ind];
+        for(int i=ind;i<n;i++){
+            if(set.contains(A.substring(ind,i+1))){
+                if(isWordbreakPossible(A,set,i+1,n,dp)){
+                    return dp[ind] = true;
+                }
+            }
+        }
+        return dp[ind] = false;
+    }
+}
+
+
